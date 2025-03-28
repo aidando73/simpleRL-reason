@@ -48,3 +48,7 @@ tail -f /tmp/ray/session_*/logs/*
 wget https://huggingface.co/datasets/hkust-nlp/SimpleRL-Zoo-Data/resolve/main/simplelr_qwen_level1to4/test.parquet
 wget https://huggingface.co/datasets/hkust-nlp/SimpleRL-Zoo-Data/resolve/main/simplelr_qwen_level1to4/train.parquet
 ```
+
+Runpod notes:
+- GPUs from US-GA-2 are really slow
+- GPUs from US-CA-1 are pretty good.
