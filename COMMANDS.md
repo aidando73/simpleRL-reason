@@ -15,9 +15,9 @@ uv pip install -e .
 # uv pip install --upgrade "nvidia-nccl-cu12==2.19.3"
 # uv pip install --upgrade "nvidia-nccl-cu12==2.26.2"
 # uv pip install --upgrade "nvidia-nccl-cu12==2.18.3"
-uv pip install --upgrade --force-reinstall "ray[default]==2.10.0"
+# uv pip install --upgrade --force-reinstall "ray[default]==2.10.0"
 
-python3 -c "import torch; print(torch.version.cuda)"
+# python3 -c "import torch; print(torch.version.cuda)"
 
 tmux
 
@@ -27,8 +27,7 @@ ray start --head \
 --node-ip-address $MASTER_NODE_IP \
 --num-gpus 8 \
 --dashboard-host 0.0.0.0 \
---include-dashboard true \
---dashboard-port 8276
+--include-dashboard true
 
 # Worker nodes
 source ~/miniconda3/bin/activate && conda activate ./env
@@ -50,4 +49,7 @@ bash train_grpo_math_tune_ray.sh \
 # To view ray logs
 tail -f /tmp/ray/session_*/logs/*
 
+
+wget https://huggingface.co/datasets/hkust-nlp/SimpleRL-Zoo-Data/resolve/main/simplelr_qwen_level1to4/test.parquet
+wget https://huggingface.co/datasets/hkust-nlp/SimpleRL-Zoo-Data/resolve/main/simplelr_qwen_level1to4/train.parquet
 ```
