@@ -42,9 +42,7 @@ class Tracking(object):
             wandb.init(
                 project=project_name,
                 name=experiment_name,
-                config=config,
-                id="fj8uohhr",
-                resume="must"
+                config=config
             )
             self.logger['wandb'] = wandb
 

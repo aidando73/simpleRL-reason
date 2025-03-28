@@ -47,6 +47,11 @@ tail -f /tmp/ray/session_*/logs/*
 
 wget https://huggingface.co/datasets/hkust-nlp/SimpleRL-Zoo-Data/resolve/main/simplelr_qwen_level1to4/test.parquet
 wget https://huggingface.co/datasets/hkust-nlp/SimpleRL-Zoo-Data/resolve/main/simplelr_qwen_level1to4/train.parquet
+
+# Save checkpoints
+pip install -U "huggingface_hub[cli]"
+huggingface-cli login
+huggingface-cli upload aidando73/simplerl-single-grpo-v1-checkpoints .
 ```
 
 Runpod notes:
