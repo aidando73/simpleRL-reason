@@ -53,3 +53,7 @@ Runpod notes:
 - GPUs from US-GA-2 are really slow
 - GPUs from US-CA-1 are pretty good.
 - US-DE-1 pretty good
+
+
+Cost notes:
+- H100 SXM 8 cards => $31.92/hr
