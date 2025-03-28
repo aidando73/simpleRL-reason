@@ -24,7 +24,6 @@ tmux
 # launch the master node of ray
 source ~/miniconda3/bin/activate && conda activate ./env
 ray start --head \
---node-ip-address $MASTER_NODE_IP \
 --num-gpus 8 \
 --dashboard-host 0.0.0.0 \
 --include-dashboard true
