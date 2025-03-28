@@ -57,3 +57,4 @@ Runpod notes:
 
 Cost notes:
 - H100 SXM 8 cards => $31.92/hr
+- Pod uptime: 15h => $478 total
