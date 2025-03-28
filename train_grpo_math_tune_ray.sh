@@ -11,7 +11,7 @@ export NCCL_SOCKET_IFNAME=podnet1
 # export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5
 
 
-export PROJECT_NAME=simplerl-math-grpo
+export PROJECT_NAME=simplerl-math-grpo-single-node
 # export WANDB_API_KEY=TO_BE_FILLED
 export WANDB_OFFICIAL=1
 export VLLM_ATTENTION_BACKEND=XFORMERS
