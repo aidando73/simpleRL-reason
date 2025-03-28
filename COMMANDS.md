@@ -29,13 +29,9 @@ ray start --head \
 --dashboard-host 0.0.0.0 \
 --include-dashboard true
 
-# Worker nodes
-source ~/miniconda3/bin/activate && conda activate ./env
-ray start --address $MASTER_NODE_IP:6379  --num-gpus 8
-
 # From master node
 bash train_grpo_math_tune_ray.sh \
-    --model_name Qwen/Qwen2.5-Math-7B \
+    --model_name Qwen/Qwen2.5-0.5B \
     --max_response_length 8192  \
     --train_batch_size 1024 \
     --rollout_n 8 \
