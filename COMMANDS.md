@@ -60,6 +60,9 @@ Runpod notes:
 - US-DE-1 pretty good
 
 
-Cost notes:
+Notes:
 - H100 SXM 8 cards => $31.92/hr
 - Pod uptime: 15h => $478 total
+- Training segments:
+    - 0->50: 13h 19m
+    - 50->90: 11h 3m

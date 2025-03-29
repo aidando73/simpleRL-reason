@@ -468,3 +468,197 @@ For debugging consider passing CUDA_LAUNCH_BLOCKING=1
 Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
 
 Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+
+
+
+
+
+
+
+
+
+(WorkerDict pid=99817) INFO 03-29 08:12:50 model_runner_base.py:120] Writing input of failed execution to /tmp/err_execute_model_input_
+20250329-081250.pkl...                                                                                                                 
+(WorkerDict pid=99817) WARNING 03-29 08:12:50 model_runner_base.py:143] Failed to pickle inputs of failed execution: CUDA error: an ill
+egal memory access was encountered                                                                                                     
+(WorkerDict pid=99817) WARNING 03-29 08:12:50 model_runner_base.py:143] CUDA kernel errors might be asynchronously reported at some oth
+er API call, so the stacktrace below might be incorrect.                                                                               
+(WorkerDict pid=99817) WARNING 03-29 08:12:50 model_runner_base.py:143] For debugging consider passing CUDA_LAUNCH_BLOCKING=1          
+(WorkerDict pid=99817) WARNING 03-29 08:12:50 model_runner_base.py:143] Compile with `TORCH_USE_CUDA_DSA` to enable device-side asserti
+ons.                                                                                                                                   
+(WorkerDict pid=99817) WARNING 03-29 08:12:50 model_runner_base.py:143]                                                                
+(WorkerDict pid=99817) annels, 32 p2p channels, 32 p2p channels per peer                                                               
+(WorkerDict pid=99817) bb943b4f63eb:99817:101979 [0] NCCL INFO comm 0x42851c00 rank 0 nranks 2 cudaDev 0 nvmlDev 0 busId 18000 commId 0
+xada0d58d32d4d686 - Init COMPLETE                                                                                                      
+(WorkerDict pid=99817) [rank0]:[E329 08:12:50.613114808 ProcessGroupNCCL.cpp:1515] [PG 9 Rank 0] Process group watchdog thread terminat
+ed with exception: CUDA error: an illegal memory access was encountered                                                                
+(WorkerDict pid=99817) CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be inc
+orrect.                                                                                                                                
+(WorkerDict pid=99817) For debugging consider passing CUDA_LAUNCH_BLOCKING=1                                                           
+(WorkerDict pid=99817) Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.                                             
+(WorkerDict pid=99817)                                                                                                                 
+(WorkerDict pid=99817) Exception raised from c10_cuda_check_implementation at ../c10/cuda/CUDAException.cpp:43 (most recent call first)
+:
+(WorkerDict pid=99817) frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x72bf5cd77f86 in /workspace/simpleRL-reas
+on/env/lib/python3.10/site-packages/torch/lib/libc10.so)                                                                               
+(WorkerDict pid=99817) frame #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x72bf
+5cd26d10 in /workspace/simpleRL-reason/env/lib/python3.10/site-packages/torch/lib/libc10.so)                                           
+(WorkerDict pid=99817) frame #2: c10::cuda::c10_cuda_check_implementation(int, char const*, char const*, int, bool) + 0x118 (0x72bf68c7
+5f08 in /workspace/simpleRL-reason/env/lib/python3.10/site-packages/torch/lib/libc10_cuda.so)                                          
+(WorkerDict pid=99817) frame #3: c10d::ProcessGroupNCCL::WorkNCCL::finishedGPUExecutionInternal() const + 0x56 (0x728f879c33e6 in /work
+space/simpleRL-reason/env/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)                                                     
+(WorkerDict pid=99817) frame #4: c10d::ProcessGroupNCCL::WorkNCCL::isCompleted() + 0xa0 (0x728f879c8600 in /workspace/simpleRL-reason/e
+nv/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)                                                                            
+(WorkerDict pid=99817) frame #5: c10d::ProcessGroupNCCL::watchdogHandler() + 0x1da (0x728f879cf2ba in /workspace/simpleRL-reason/env/li
+b/python3.10/site-packages/torch/lib/libtorch_cuda.so)                                                                                 
+(WorkerDict pid=99817) frame #6: c10d::ProcessGroupNCCL::ncclCommWatchdog() + 0x10c (0x728f879d16fc in /workspace/simpleRL-reason/env/l
+ib/python3.10/site-packages/torch/lib/libtorch_cuda.so)                                                                                
+(WorkerDict pid=99817) frame #7: <unknown function> + 0xdbbf4 (0x72bf7c2dbbf4 in /workspace/simpleRL-reason/env/bin/../lib/libstdc++.so
+.6)                                                                                                                                    
+(WorkerDict pid=99817) frame #8: <unknown function> + 0x94ac3 (0x72bf7e50eac3 in /lib/x86_64-linux-gnu/libc.so.6)                      
+(WorkerDict pid=99817) frame #9: clone + 0x44 (0x72bf7e59fa04 in /lib/x86_64-linux-gnu/libc.so.6)                                      
+(WorkerDict pid=99817)                                                                                                                 
+(WorkerDict pid=99817) [2025-03-29 08:12:50,344 E 99817 101781] logging.cc:97: Unhandled exception: N3c1016DistBackendErrorE. what(): [
+PG 9 Rank 0] Process group watchdog thread terminated with exception: CUDA error: an illegal memory access was encountered             
+(WorkerDict pid=99817) CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be inc
+orrect.                                                                                                                                
+(WorkerDict pid=99817) For debugging consider passing CUDA_LAUNCH_BLOCKING=1                                                           
+(WorkerDict pid=99817) Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.                                             
+(WorkerDict pid=99817)                                                                                                                 
+(WorkerDict pid=99817) Exception raised from c10_cuda_check_implementation at ../c10/cuda/CUDAException.cpp:43 (most recent call first)
+:                                                                                                                                      
+(WorkerDict pid=99817) frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x72bf5cd77f86 in /workspace/simpleRL-reas
+on/env/lib/python3.10/site-packages/torch/lib/libc10.so)                                                                               
+(WorkerDict pid=99817) frame #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x72bf
+5cd26d10 in /workspace/simpleRL-reason/env/lib/python3.10/site-packages/torch/lib/libc10.so)                                           
+(WorkerDict pid=99817) frame #2: c10::cuda::c10_cuda_check_implementation(int, char const*, char const*, int, bool) + 0x118 (0x72bf68c7
+5f08 in /workspace/simpleRL-reason/env/lib/python3.10/site-packages/torch/lib/libc10_cuda.so)                                          
+(WorkerDict pid=99817) frame #3: c10d::ProcessGroupNCCL::WorkNCCL::finishedGPUExecutionInternal() const + 0x56 (0x728f879c33e6 in /work
+space/simpleRL-reason/env/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)                                           [114/1643]
+(WorkerDict pid=99817) frame #4: c10d::ProcessGroupNCCL::WorkNCCL::isCompleted() + 0xa0 (0x728f879c8600 in /workspace/simpleRL-reason/e
+nv/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)                                                                            
+(WorkerDict pid=99817) frame #5: c10d::ProcessGroupNCCL::watchdogHandler() + 0x1da (0x728f879cf2ba in /workspace/simpleRL-reason/env/li
+b/python3.10/site-packages/torch/lib/libtorch_cuda.so)                                                                                 
+(WorkerDict pid=99817) frame #6: c10d::ProcessGroupNCCL::ncclCommWatchdog() + 0x10c (0x728f879d16fc in /workspace/simpleRL-reason/env/l
+ib/python3.10/site-packages/torch/lib/libtorch_cuda.so)                                                                                
+(WorkerDict pid=99817) frame #7: <unknown function> + 0xdbbf4 (0x72bf7c2dbbf4 in /workspace/simpleRL-reason/env/bin/../lib/libstdc++.so
+.6)                                                                                                                                    
+(WorkerDict pid=99817) frame #8: <unknown function> + 0x94ac3 (0x72bf7e50eac3 in /lib/x86_64-linux-gnu/libc.so.6)                      
+(WorkerDict pid=99817) frame #9: clone + 0x44 (0x72bf7e59fa04 in /lib/x86_64-linux-gnu/libc.so.6)                                      
+(WorkerDict pid=99817)                                                                                                                 
+(WorkerDict pid=99817) Exception raised from ncclCommWatchdog at ../torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp:1521 (most recent 
+call first):                                                                                                                           
+(WorkerDict pid=99817) frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x72bf5cd77f86 in /workspace/simpleRL-reas
+on/env/lib/python3.10/site-packages/torch/lib/libc10.so)                                                                               
+(WorkerDict pid=99817) frame #1: <unknown function> + 0xe5aa84 (0x728f8765aa84 in /workspace/simpleRL-reason/env/lib/python3.10/site-pa
+ckages/torch/lib/libtorch_cuda.so)                                                                                                     
+(WorkerDict pid=99817) frame #2: <unknown function> + 0xdbbf4 (0x72bf7c2dbbf4 in /workspace/simpleRL-reason/env/bin/../lib/libstdc++.so
+.6)                                                                                                                                    
+(WorkerDict pid=99817) frame #3: <unknown function> + 0x94ac3 (0x72bf7e50eac3 in /lib/x86_64-linux-gnu/libc.so.6)                      
+(WorkerDict pid=99817) frame #4: clone + 0x44 (0x72bf7e59fa04 in /lib/x86_64-linux-gnu/libc.so.6)                                      
+(WorkerDict pid=99817)                                                                                                                 
+(WorkerDict pid=99817) [2025-03-29 08:12:50,373 E 99817 101781] logging.cc:104: Stack trace:                                           
+(WorkerDict pid=99817)  /workspace/simpleRL-reason/env/lib/python3.10/site-packages/ray/_raylet.so(+0xfe543a) [0x72bf7d5e543a] ray::ope
+rator<<()                                                                                                                              
+(WorkerDict pid=99817) /workspace/simpleRL-reason/env/lib/python3.10/site-packages/ray/_raylet.so(+0xfe7b78) [0x72bf7d5e7b78] ray::Term
+inateHandler()                                                                                                                         
+(WorkerDict pid=99817) /workspace/simpleRL-reason/env/bin/../lib/libstdc++.so.6(+0xb135a) [0x72bf7c2b135a] __cxxabiv1::__terminate()   
+(WorkerDict pid=99817) /workspace/simpleRL-reason/env/bin/../lib/libstdc++.so.6(+0xb13c5) [0x72bf7c2b13c5]                             
+(WorkerDict pid=99817) /workspace/simpleRL-reason/env/bin/../lib/libstdc++.so.6(+0xb134f) [0x72bf7c2b134f]                             
+(WorkerDict pid=99817) /workspace/simpleRL-reason/env/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so(+0xe5ab35) [0x728f8765ab3
+5] c10d::ProcessGroupNCCL::ncclCommWatchdog()                                                                                          
+(WorkerDict pid=99817) /workspace/simpleRL-reason/env/bin/../lib/libstdc++.so.6(+0xdbbf4) [0x72bf7c2dbbf4] execute_native_thread_routin
+e
+(WorkerDict pid=99817) /lib/x86_64-linux-gnu/libc.so.6(+0x94ac3) [0x72bf7e50eac3]                                                      
+(WorkerDict pid=99817) /lib/x86_64-linux-gnu/libc.so.6(clone+0x44) [0x72bf7e59fa04] __clone                                            
+(WorkerDict pid=99817)                                                                                                                 
+(WorkerDict pid=99817) *** SIGABRT received at time=1743235970 on cpu 191 ***                                                          
+(WorkerDict pid=99817) PC: @     0x72bf7e5109fc  (unknown)  pthread_kill                                                               
+(WorkerDict pid=99817)     @     0x72bf7e4bc520  (unknown)  (unknown)                                                                  
+(WorkerDict pid=99817) [2025-03-29 08:12:50,374 E 99817 101781] logging.cc:361: *** SIGABRT received at time=1743235970 on cpu 191 *** 
+(WorkerDict pid=99817) [2025-03-29 08:12:50,374 E 99817 101781] logging.cc:361: PC: @     0x72bf7e5109fc  (unknown)  pthread_kill      
+(WorkerDict pid=99817) [2025-03-29 08:12:50,374 E 99817 101781] logging.cc:361:     @     0x72bf7e4bc520  (unknown)  (unknown)         
+(WorkerDict pid=99817) Fatal Python error: Aborted                                                                                     
+(WorkerDict pid=99817)                                                                                                                 
+(WorkerDict pid=99817)                                                                                                                 
+(WorkerDict pid=99817) Extension modules: msgpack._cmsgpack, google._upb._message, psutil._psutil_linux, psutil._psutil_posix, setproct
+itle, yaml._yaml, charset_normalizer.md, requests.packages.charset_normalizer.md, requests.packages.chardet.md, uvloop.loop, ray._rayle
+t, numpy.core._multiarray_umath, numpy.core._multiarray_tests, numpy.linalg._umath_linalg, numpy.fft._pocketfft_internal, numpy.random.
+_common, numpy.random.bit_generator, numpy.random._bounded_integers, numpy.random._mt19937, numpy.random.mtrand, numpy.random._philox, 
+numpy.random._pcg64, numpy.random._sfc64, numpy.random._generator, pyarrow.lib, pandas._libs.tslibs.ccalendar, pandas._libs.tslibs.np_d
+atetime, pandas._libs.tslibs.dtypes, pandas._libs.tslibs.base, pandas._libs.tslibs.nattype, pandas._libs.tslibs.timezones, pandas._libs
+.tslibs.fields, pandas._libs.tslibs.timedeltas, pandas._libs.tslibs.tzconversion, pandas._libs.tslibs.timestamps, pandas._libs.properti
+es, pandas._libs.tslibs.offsets, pandas._libs.tslibs.strptime, pandas._libs.tslibs.parsing, pandas._libs.tslibs.conversion, pandas._lib
+s.tslibs.period, pandas._libs.tslibs.vectorized, pandas._libs.ops_dispatch, pandas._libs.missing, pandas._libs.hashtable, pandas._libs.
+algos, pandas._libs.interval, pandas._libs.lib, pyarrow._compute, pandas._libs.ops, pandas._libs.hashing, pandas._libs.arrays, pandas._
+libs.tslib, pandas._libs.sparse, pandas._libs.internals, pandas._libs.indexing, pandas._libs.index, pandas._libs.writers, pandas._libs.
+join, pandas._libs.window.aggregations, pandas._libs.window.indexers, pandas._libs.reshape, pandas._libs.groupby, pandas._libs.json, pa
+ndas._libs.parsers, pandas._libs.testing, torch._C, torch._C._fft, torch._C._linalg, torch._C._nested, torch._C._nn, torch._C._sparse, 
+torch._C._special, markupsafe._speedups, PIL._imaging, sentencepiece._sentencepiece, PIL._imagingft, msgspec._core, regex._regex, multi
+dict._multidict, yarl._quoting_c, propcache._helpers_c, aiohttp._http_writer, aiohttp._http_parser, aiohttp._websocket.mask, aiohttp._w
+ebsocket.reader_c, frozenlist._frozenlist, pyarrow._json, zmq.backend.cython._zmq, cuda_utils, __triton_launcher (total: 91)           
+(WorkerDict pid=99817) /workspace/simpleRL-reason/env/lib/python3.10/multiprocessing/resource_tracker.py:224: UserWarning: resource_tra
+cker: There appear to be 1 leaked shared_memory objects to clean up at shutdown                                                        
+(WorkerDict pid=99817)   warnings.warn('resource_tracker: There appear to be %d '                                                   
+(raylet) A worker died or was killed while executing a task by an unexpected system error. To troubleshoot the problem, check the logs 
+for the dead worker. RayTask ID: ffffffffffffffff93f2b6dd14caea6c8e21ae9007000000 Worker ID: 2b7b2a2d648ca2224a2ab3c9d773f5d643e44a2156
+1e6cedfaaba359 Node ID: 31a71c620759d8a5fc7fcb2ae06df5cfbc55da029c585f2578d00abc Worker IP address: 172.18.0.2 Worker port: 10224 Worke
+r PID: 99817 Worker exit type: SYSTEM_ERROR Worker exit detail: Worker unexpectedly exits with a connection error code 2. End of file. 
+There are some potential root causes. (1) The process is killed by SIGKILL by OOM killer due to high memory usage. (2) ray stop --force
+ is called. (3) The worker is crashed unexpectedly due to SIGSEGV or other unexpected errors.                                          
+Error executing job with overrides: ['algorithm.adv_estimator=grpo', 'data.train_files=/workspace/simpleRL-reason/train.parquet', 'data
+.val_files=/workspace/simpleRL-reason/test.parquet', 'data.train_batch_size=1024', 'data.val_batch_size=500', 'data.max_prompt_length=1
+024', 'data.max_response_length=8192', 'actor_rollout_ref.model.path=Qwen/Qwen2.5-0.5B', 'actor_rollout_ref.actor.optim.lr=5e-7', 'acto
+r_rollout_ref.model.use_remove_padding=True', 'actor_rollout_ref.actor.ppo_mini_batch_size=256', 'actor_rollout_ref.actor.ppo_micro_bat
+ch_size_per_gpu=2', 'actor_rollout_ref.actor.use_kl_loss=True', 'actor_rollout_ref.actor.kl_loss_coef=0.0001', 'actor_rollout_ref.actor
+.entropy_coeff=0.001', 'actor_rollout_ref.actor.clip_ratio=0.2', 'actor_rollout_ref.actor.kl_loss_type=low_var_kl', 'actor_rollout_ref.
+model.enable_gradient_checkpointing=True', 'actor_rollout_ref.actor.fsdp_config.param_offload=False', 'actor_rollout_ref.actor.fsdp_con
+fig.grad_offload=False', 'actor_rollout_ref.actor.fsdp_config.optimizer_offload=False', 'actor_rollout_ref.rollout.temperature=1.0', 'a
+ctor_rollout_ref.rollout.log_prob_micro_batch_size=160', 'actor_rollout_ref.rollout.tensor_model_parallel_size=2', 'actor_rollout_ref.r
+ollout.name=vllm', 'actor_rollout_ref.rollout.gpu_memory_utilization=0.9', 'actor_rollout_ref.rollout.n=8', 'actor_rollout_ref.rollout.
+enable_chunked_prefill=False', 'actor_rollout_ref.rollout.max_num_batched_tokens=10216', 'actor_rollout_ref.rollout.micro_rollout_batch
+_size=1024', 'actor_rollout_ref.ref.log_prob_micro_batch_size=160', 'actor_rollout_ref.ref.fsdp_config.param_offload=True', 'algorithm.
+kl_ctrl.kl_coef=0.001', 'critic.ppo_micro_batch_size_per_gpu=4', 'trainer.critic_warmup=0', 'trainer.logger=[console,wandb]', 'trainer.
+project_name=simplerl-math-grpo-single-node', 'trainer.remove_previous_ckpt=False', 'trainer.experiment_name=v1_Qwen_Qwen2.5-0.5B_max_r
+esponse8192_batch1024_rollout8_klcoef0.0001_entcoef0.001_simplelr_math_35', 'trainer.n_gpus_per_node=8', 'trainer.nnodes=1', 'trainer.r
+emove_clip=False', 'trainer.save_freq=5', 'trainer.test_freq=5', 'trainer.default_local_dir=/workspace/simpleRL-reason/checkpoints/v1_Q
+wen_Qwen2.5-0.5B_max_response8192_batch1024_rollout8_klcoef0.0001_entcoef0.001_simplelr_math_35', 'trainer.total_epochs=20']           
+Traceback (most recent call last):                                                                                                   
+  File "/tmp/ray/session_2025-03-28_05-49-15_928839_3718/runtime_resources/working_dir_files/_ray_pkg_51417555636a8896/verl/trainer/mai
+n_ppo.py", line 111, in main                                                                                                           
+    run_ppo(config)                                                                                                                    
+  File "/tmp/ray/session_2025-03-28_05-49-15_928839_3718/runtime_resources/working_dir_files/_ray_pkg_51417555636a8896/verl/trainer/mai
+n_ppo.py", line 119, in run_ppo                                                                                                        
+    ray.get(main_task.remote(config, compute_score))                                                                                   
+  File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper     
+    return fn(*args, **kwargs)                                                                                                         
+  File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper            
+    return func(*args, **kwargs)                                                                                                       
+  File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/ray/_private/worker.py", line 2667, in get                         
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)                                                     
+  File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/ray/_private/worker.py", line 864, in get_objects                  
+    raise value.as_instanceof_cause()                                                                                                  
+ray.exceptions.RayTaskError(RayActorError): ray::main_task() (pid=99514, ip=172.18.0.2)                                                
+  File "/tmp/ray/session_2025-03-28_05-49-15_928839_3718/runtime_resources/working_dir_files/_ray_pkg_51417555636a8896/verl/trainer/mai
+n_ppo.py", line 205, in main_task                                                                                                      
+    trainer.fit()                                                                                                                      
+  File "/tmp/ray/session_2025-03-28_05-49-15_928839_3718/runtime_resources/working_dir_files/_ray_pkg_51417555636a8896/verl/trainer/ppo
+/ray_trainer.py", line 952, in fit                                                                                                     
+    val_metrics: dict = self._validate()                                                                                               
+  File "/tmp/ray/session_2025-03-28_05-49-15_928839_3718/runtime_resources/working_dir_files/_ray_pkg_51417555636a8896/verl/trainer/ppo
+/ray_trainer.py", line 532, in _validate                                                                                               
+    test_output_gen_batch_padded = self.actor_rollout_wg.generate_sequences(test_gen_batch_padded)                                    
+  File "/tmp/ray/session_2025-03-28_05-49-15_928839_3718/runtime_resources/working_dir_files/_ray_pkg_51417555636a8896/verl/sin[0/1643]                      roller/ray/base.py", line 42, in func                                                                                                                            output = ray.get(output)                                                                                                                                 ray.exceptions.RayActorError: The actor died unexpectedly before finishing this task.                                                                                class_name: create_colocated_worker_cls.<locals>.WorkerDict                                                                                                  actor_id: 93f2b6dd14caea6c8e21ae9007000000                                                                                                                   pid: 99817                                                                                                                                                   name: 5LGVDrWorkerDict_0:0                                                                                                                                   namespace: 0fbfdec5-b2b0-46e9-a9cf-bb2160d8633b                                                                                h a connection error c        ip: 172.18.0.2                                                                                                                 (2) ray stop --force iThe actor is dead because its worker process has died. Worker exit type: SYSTEM_ERROR Worker exit detail: Worker unexpectedly exits wit                      h a connection error code 2. End of file. There are some potential root causes. (1) The process is killed by SIGKILL by OOM killer due                       to high memory usage. (2) ray stop --force is called. (3) The worker is crashed unexpectedly due to SIGSEGV or other unexpected errors.                                                                                                                                                                                   Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.                                                                                                                                                                                                                         f63eb" 08:35 29-Mar-25---------------------------------------                                                                                                Job 'raysubmit_KhNA3KfHrAkv3XAc' failed                                                                                                ---------------------------------------                                                                                                                                                                                                                                       
+Status message: Job entrypoint command failed with exit code 1, last available logs (truncated to 20,000 chars):                       
+ray.exceptions.RayActorError: The actor died unexpectedly before finishing this task.                                                  
+        class_name: create_colocated_worker_cls.<locals>.WorkerDict                                                                    
+        actor_id: 93f2b6dd14caea6c8e21ae9007000000                                                                                     
+        pid: 99817                                                                                                                     
+        name: 5LGVDrWorkerDict_0:0                                                                                                     
+        namespace: 0fbfdec5-b2b0-46e9-a9cf-bb2160d8633b                                                                                
+        ip: 172.18.0.2                                                                                                                 
+The actor is dead because its worker process has died. Worker exit type: SYSTEM_ERROR Worker exit detail: Worker unexpectedly exits wit
+h a connection error code 2. End of file. There are some potential root causes. (1) The process is killed by SIGKILL by OOM killer due 
+to high memory usage. (2) ray stop --force is called. (3) The worker is crashed unexpectedly due to SIGSEGV or other unexpected errors.
+                                                                                                                                       
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.    
