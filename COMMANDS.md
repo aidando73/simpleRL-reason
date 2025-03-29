@@ -1,0 +1,68 @@
+
+```bash
+# One time setup
+cp sample.envrc .envrc
+# Go to https://wandb.ai/authorize and fill in the WANDB_API_KEY
+direnv allow
+
+source ~/miniconda3/bin/activate && conda create -y --prefix ./env python=3.10
+source ~/miniconda3/bin/activate && conda activate ./env
+pip install uv
+uv pip install "torch==2.4.0" --index-url https://download.pytorch.org/whl/cu124
+uv pip install flash-attn --no-build-isolation
+uv pip install -e .
+# uv pip install "torch==2.4.0+cu118" --upgrade --index-url https://download.pytorch.org/whl/cu118
+# uv pip install --upgrade "nvidia-nccl-cu12==2.19.3"
+# uv pip install --upgrade "nvidia-nccl-cu12==2.26.2"
+# uv pip install --upgrade "nvidia-nccl-cu12==2.18.3"
+# uv pip install --upgrade --force-reinstall "ray[default]==2.10.0"
+
+# python3 -c "import torch; print(torch.version.cuda)"
+
+tmux
+
+# launch the master node of ray
+source ~/miniconda3/bin/activate && conda activate ./env
+ray start --head \
+--num-gpus 8 \
+--dashboard-host 0.0.0.0 \
+--include-dashboard true
+
+# From master node
+bash train_grpo_math_tune_ray.sh \
+    --model_name Qwen/Qwen2.5-0.5B \
+    --max_response_length 8192  \
+    --train_batch_size 1024 \
+    --rollout_n 8 \
+    --kl_loss_coef 0.0001 \
+    --entropy_coeffient 0.001 \
+    --rollout_gpu_memory_util 0.9 \
+    --rollout_tp 2 \
+    --save_freq 5
+
+
+# To view ray logs
+tail -f /tmp/ray/session_*/logs/*
+
+
+wget https://huggingface.co/datasets/hkust-nlp/SimpleRL-Zoo-Data/resolve/main/simplelr_qwen_level1to4/test.parquet
+wget https://huggingface.co/datasets/hkust-nlp/SimpleRL-Zoo-Data/resolve/main/simplelr_qwen_level1to4/train.parquet
+
+# Save checkpoints
+pip install -U "huggingface_hub[cli]"
+huggingface-cli login
+huggingface-cli upload aidando73/simplerl-single-grpo-v1-checkpoints .
+```
+
+Runpod notes:
+- GPUs from US-GA-2 are really slow
+- GPUs from US-CA-1 are pretty good.
+- US-DE-1 pretty good
+
+
+Notes:
+- H100 SXM 8 cards => $31.92/hr
+- Pod uptime: 15h => $478 total
+- Training segments:
+    - 0->50: 13h 19m
+    - 50->90: 11h 3m
