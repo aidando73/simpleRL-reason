@@ -99,6 +99,15 @@ sudo apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/machi
 
 sudo reboot
 
+sudo apt install -o Dpkg::Options::='--force-overwrite' nvidia-fabricmanager-535
+sudo systemctl start nvidia-fabricmanager && sudo systemctl enable nvidia-fabricmanager
+
+# Add to ~/.bashrc
+echo 'export PATH=/usr/local/cuda/bin:$PATH' >> ~/.bashrc
+echo 'export LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH' >> ~/.bashrc
+source ~/.bashrc
+
+sudo apt -y install build-essential devscripts debhelper check libsubunit-dev fakeroot pkg-config dkms
 
 
 # Ec2 setup
