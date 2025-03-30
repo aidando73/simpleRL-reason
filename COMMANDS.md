@@ -109,6 +109,18 @@ source ~/.bashrc
 
 sudo apt -y install build-essential devscripts debhelper check libsubunit-dev fakeroot pkg-config dkms
 
+wget https://github.com/NVIDIA/gdrcopy/archive/refs/tags/v2.4.tar.gz \
+&& tar xf v2.4.tar.gz \
+&& cd gdrcopy-2.4/packages
+
+CUDA=/usr/local/cuda ./build-deb-packages.sh
+
+sudo dpkg -i gdrdrv-dkms_2.4-1_amd64.*.deb \
+&& sudo dpkg -i libgdrapi_2.4-1_amd64.*.deb \
+&& sudo dpkg -i gdrcopy-tests_2.4-1_amd64.*.deb \
+&& sudo dpkg -i gdrcopy_2.4-1_amd64.*.deb
+
+curl -O https://efa-installer.amazonaws.com/aws-efa-installer-1.38.1.tar.gz
 
 # Ec2 setup
 sudo mkdir /workspace
