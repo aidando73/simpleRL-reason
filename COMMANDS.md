@@ -3,7 +3,7 @@ Assumes Ubuntu 22.04
 
 ```bash
 # Get Weights & Biases API key from AWS Secrets Manager
-echo "export WANDB_API_KEY=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:838892012396:secret:wandb_api_key-rg9keb --query SecretString --output text | jq -r '.wandb_api_key')" >> .envrc
+echo "export WANDB_API_KEY=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:838892012396:secret:wandb_api_key-rg9keb --query SecretString --output text | jq -r '.WANDB_API_KEY')" >> .envrc
 echo "export MASTER_NODE_IP=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)" >> .envrc
 
 
