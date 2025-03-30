@@ -5,6 +5,7 @@ set -x
 export NCCL_DEBUG=INFO
 export RAY_BACKEND_LOG_LEVEL=debug
 export RAY_DEDUP_LOGS=0
+export CUDA_LAUNCH_BLOCKING=1
 # export NCCL_IB_DISABLE=1
 # export NCCL_P2P_DISABLE=0
 # export NCCL_SOCKET_IFNAME=podnet1
@@ -182,7 +183,8 @@ ray job submit --address=$MASTER_NODE_IP:6379 \
           "http_proxy": "",
           "https_proxy": "",
           "NCCL_DEBUG": "'$NCCL_DEBUG'",
-          "RAY_DEDUP_LOGS": "'$RAY_DEDUP_LOGS'"
+          "RAY_DEDUP_LOGS": "'$RAY_DEDUP_LOGS'",
+          "CUDA_LAUNCH_BLOCKING": "'$CUDA_LAUNCH_BLOCKING'"
         }
     }' \
   -- python -m verl.trainer.main_ppo \
