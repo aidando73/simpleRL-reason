@@ -72,8 +72,19 @@ python3 -c "import torch; print(f'NCCL Version: {torch.cuda.nccl.version()}')"
 
 ```bash
 # EFA setup: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa-start-nccl.html
-
-
+sudo apt-get update && sudo apt-get upgrade -y
+sudo apt-get update && sudo apt-get install build-essential -y
+sudo apt-get install -y gcc make linux-headers-$(uname -r)
+cat << EOF | sudo tee --append /etc/modprobe.d/blacklist.conf
+blacklist vga16fb
+blacklist nouveau
+blacklist rivafb
+blacklist nvidiafb
+blacklist rivatv
+EOF
+sudo sed -i 's/GRUB_CMDLINE_LINUX=".*"/GRUB_CMDLINE_LINUX="rdblacklist=nouveau"/' /etc/default/grub
+sudo update-grub
+sudo reboot
 
 # Ec2 setup
 sudo mkdir /workspace
