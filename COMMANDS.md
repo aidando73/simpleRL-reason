@@ -159,6 +159,8 @@ sudo apt-get install -y iperf3
 sudo apt install iputils-ping
 sudo apt install iftop
 
+./setup-ec2.bash
+
 # Ec2 setup
 sudo mkdir /workspace
 
