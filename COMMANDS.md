@@ -17,9 +17,6 @@ direnv allow
 # Copy .envrc to worker node
 
 
-# Install CUDA
-
-
 source ~/miniconda3/bin/activate && conda create -y --prefix ./env python=3.10
 source ~/miniconda3/bin/activate && conda activate ./env
 pip install uv
@@ -35,7 +32,7 @@ uv pip install -e .
 # python3 -c "import torch; print(torch.version.cuda)"
 
 # launch the master node of ray
-source .envrc
+tmux
 source ~/miniconda3/bin/activate && conda activate ./env
 ray start --head \
 --node-ip-address $MASTER_NODE_IP \
@@ -44,14 +41,12 @@ ray start --head \
 --include-dashboard true
 
 # Worker nodes
-source .envrc
+tmux
 source ~/miniconda3/bin/activate && conda activate ./env
 ray start --address $MASTER_NODE_IP:6379  --num-gpus 8
 
 # From master node
-tmux
-source ~/miniconda3/bin/activate && conda activate ./env
-source .envrc
+tmux attach
 bash train_grpo_math_tune_ray.sh \
     --model_name Qwen/Qwen2.5-Math-7B \
     --train_batch_size 1024 \
