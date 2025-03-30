@@ -3,10 +3,19 @@ Assumes Ubuntu 22.04
 
 ```bash
 # One time setup
-cp sample.envrc .envrc
-# Go to https://wandb.ai/authorize and fill in the WANDB_API_KEY
-source .envrc
+echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
+source ~/.bashrc
+sudo apt install -y jq awscli
+
+# Run on master
+aws configure # Just put in region
+echo "export WANDB_API_KEY=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:838892012396:secret:wandb_api_key-rg9keb --query SecretString --output text | jq -r '.WANDB_API_KEY')" >> .envrc
+aws_metadata_token=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"`
+ec2_ip_address=`curl -H "X-aws-ec2-metadata-token: $aws_metadata_token" http://169.254.169.254/latest/meta-data/local-ipv4`
+echo "export MASTER_NODE_IP=$ec2_ip_address" >> .envrc
 direnv allow
+# Copy .envrc to worker node
+
 
 # Install CUDA
 
