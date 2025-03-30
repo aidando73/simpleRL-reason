@@ -72,6 +72,7 @@ python3 -c "import torch; print(f'NCCL Version: {torch.cuda.nccl.version()}')"
 
 ```bash
 # Attaching existing EBS volume to instance
+lsblk
 DEVICE_ID=nvme9n1
 sudo mkdir -p /workspace
 sudo mount /dev/$DEVICE_ID /workspace
