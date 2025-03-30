@@ -109,14 +109,6 @@ python3 -c "import torch; print(f'NCCL Version: {torch.cuda.nccl.version()}')"
 
 
 ```bash
-
-
-# Ec2 setup
-# Existing EBS volume
-
-```
-
-```bash
 # To view ray logs
 tail -f /tmp/ray/session_*/logs/*
 
