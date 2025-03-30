@@ -17,9 +17,12 @@ sudo apt-get install -y nvidia-driver-550-open
 sudo apt-get install -y cuda-drivers-550
 sudo apt-get install -y nvidia-fabricmanager-550
 sudo systemctl start nvidia-fabricmanager && sudo systemctl enable nvidia-fabricmanager
+sudo apt -y install iputils-ping iperf3 iftop
 
+# Attach EBS Volume then:
+# Existing EBS volume
 lsblk
-DEVICE_ID=nvme1n1
+DEVICE_ID=nvme9n1
 sudo mkdir -p /workspace
 sudo mount /dev/$DEVICE_ID /workspace
 echo "/dev/$DEVICE_ID  /workspace  xfs  defaults,nofail  0  2" | sudo tee -a /etc/fstab
