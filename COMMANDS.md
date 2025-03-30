@@ -58,7 +58,6 @@ sudo mkfs -t xfs /dev/$DEVICE_ID #!!! Will destroy existing data on volume
 sudo mount /dev/$DEVICE_ID /workspace
 echo "/dev/$DEVICE_ID  /workspace  xfs  defaults,nofail  0  2" | sudo tee -a /etc/fstab
 sudo chown ubuntu:ubuntu /workspace
-
 cd /workspace \
 && git clone https://github.com/aidando73/simpleRL-reason \
 && cd simpleRL-reason \
@@ -66,7 +65,7 @@ cd /workspace \
 && echo "👉 $(realpath .)"
 
 # Run on master
-
+: > .envrc
 echo "export WANDB_API_KEY=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:838892012396:secret:wandb_api_key-rg9keb --query SecretString --output text | jq -r '.WANDB_API_KEY')" >> .envrc
 
 aws_metadata_token=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"`
