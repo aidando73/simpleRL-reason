@@ -122,6 +122,12 @@ sudo dpkg -i gdrdrv-dkms_2.4-1_amd64.*.deb \
 
 curl -O https://efa-installer.amazonaws.com/aws-efa-installer-1.38.1.tar.gz
 
+tar -xf aws-efa-installer-1.38.1.tar.gz && cd aws-efa-installer
+
+sudo ./efa_installer.sh -y --mpi=openmpi4
+
+fi_info -p efa -t FI_EP_RDM
+
 # Ec2 setup
 sudo mkdir /workspace
 
