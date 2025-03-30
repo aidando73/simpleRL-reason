@@ -130,6 +130,35 @@ sudo systemctl status nvidia-fabricmanager
 
 fi_info -p efa -t FI_EP_RDM
 
+# Install NCCL
+cd /opt
+sudo git clone https://github.com/NVIDIA/nccl.git -b v2.23.4-1 && cd nccl
+sudo make -j src.build CUDA_HOME=/usr/local/cuda
+
+# Install NCCL tests
+cd $HOME
+git clone https://github.com/NVIDIA/nccl-tests.git && cd nccl-tests
+
+export LD_LIBRARY_PATH=/opt/amazon/efa/lib:$LD_LIBRARY_PATH
+make MPI=1 MPI_HOME=/opt/amazon/openmpi NCCL_HOME=/opt/nccl/build CUDA_HOME=/usr/local/cuda
+
+# Run NCCL tests
+TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"` \
+&& curl -H "X-aws-ec2-metadata-token: $TOKEN" -v http://169.254.169.254/latest/meta-data/local-ipv4 >> my-hosts
+
+/opt/amazon/openmpi/bin/mpirun \
+-x FI_EFA_USE_DEVICE_RDMA=1 \
+-x LD_LIBRARY_PATH=/opt/nccl/build/lib:/usr/local/cuda/lib64:/opt/amazon/efa/lib:/opt/amazon/openmpi/lib:/opt/amazon/ofi-nccl/lib:$LD_LIBRARY_PATH \
+-x NCCL_DEBUG=INFO \
+--hostfile my-hosts -n 8 -N 8 \
+--mca pml ^cm --mca btl tcp,self --mca btl_tcp_if_exclude lo,docker0 --bind-to none \
+$HOME/nccl-tests/build/all_reduce_perf -b 8 -e 1G -f 2 -g 1 -c 1 -n 100
+
+# Other software for this AMI
+sudo apt-get install -y iperf3
+sudo apt install iputils-ping
+sudo apt install iftop
+
 # Ec2 setup
 sudo mkdir /workspace
 
