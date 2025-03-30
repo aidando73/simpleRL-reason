@@ -7,12 +7,46 @@ echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
 source ~/.bashrc
 sudo apt install -y jq awscli
 
+# Install CUDA
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
+sudo dpkg -i cuda-keyring_1.1-1_all.deb
+sudo apt-get update
+sudo apt-get -y install cuda-toolkit-12-4
+
+sudo apt-get install -y nvidia-driver-550-open
+sudo apt-get install -y cuda-drivers-550
+sudo apt-get install -y nvidia-fabricmanager-550
+sudo systemctl start nvidia-fabricmanager && sudo systemctl enable nvidia-fabricmanager
+
+lsblk
+DEVICE_ID=nvme1n1
+sudo mkdir -p /workspace
+sudo mount /dev/$DEVICE_ID /workspace
+echo "/dev/$DEVICE_ID  /workspace  xfs  defaults,nofail  0  2" | sudo tee -a /etc/fstab
+sudo chown ubuntu:ubuntu /workspace
+
+# New EBS volume
+lsblk
+DEVICE_ID=nvme9n1
+sudo mkdir -p /workspace
+sudo mkfs -t xfs /dev/$DEVICE_ID #!!! Will destroy existing data on volume
+sudo mount /dev/$DEVICE_ID /workspace
+echo "/dev/$DEVICE_ID  /workspace  xfs  defaults,nofail  0  2" | sudo tee -a /etc/fstab
+sudo chown ubuntu:ubuntu /workspace
+
+cd /workspace \
+&& git clone https://github.com/aidando73/simpleRL-reason \
+&& cd simpleRL-reason \
+&& git checkout aidand-v2 \
+&& echo "👉 $(realpath .)"
+
 # Run on master
-aws configure # Just put in region
+aws configure set default.region us-east-1 
 echo "export WANDB_API_KEY=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:838892012396:secret:wandb_api_key-rg9keb --query SecretString --output text | jq -r '.WANDB_API_KEY')" >> .envrc
+
 aws_metadata_token=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"`
-ec2_ip_address=`curl -H "X-aws-ec2-metadata-token: $aws_metadata_token" http://169.254.169.254/latest/meta-data/local-ipv4`
-echo "export MASTER_NODE_IP=$ec2_ip_address" >> .envrc
+echo "export MASTER_NODE_IP=$(curl -H "X-aws-ec2-metadata-token: $aws_metadata_token" http://169.254.169.254/latest/meta-data/local-ipv4)" >> .envrc
+
 direnv allow
 # Copy .envrc to worker node
 
@@ -76,36 +110,10 @@ python3 -c "import torch; print(f'NCCL Version: {torch.cuda.nccl.version()}')"
 
 ```bash
 
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
-sudo dpkg -i cuda-keyring_1.1-1_all.deb
-sudo apt-get update
-sudo apt-get -y install cuda-toolkit-12-4
-
-sudo apt-get install -y nvidia-driver-550-open
-sudo apt-get install -y cuda-drivers-550
-sudo apt-get install -y nvidia-fabricmanager-550
-sudo systemctl start nvidia-fabricmanager
-sudo systemctl status nvidia-fabricmanager
-# Need to restart instance after this.
-
 
 # Ec2 setup
-sudo mkdir /workspace
+# Existing EBS volume
 
-# Only if EBS volume is new
-lsblk
-
-DEVICE_ID=nvme9n1
-sudo mkfs -t xfs /dev/$DEVICE_ID
-sudo mount /dev/$DEVICE_ID /workspace
-echo "/dev/$DEVICE_ID  /workspace  xfs  defaults,nofail  0  2" | sudo tee -a /etc/fstab
-sudo chown ubuntu:ubuntu /workspace
-
-cd /workspace \
-&& git clone https://github.com/aidando73/simpleRL-reason \
-&& cd simpleRL-reason \
-&& git checkout aidand-v2 \
-&& echo "👉 $(realpath .)"
 ```
 
 ```bash
