@@ -19,36 +19,30 @@ sudo apt-get install -y nvidia-fabricmanager-550
 sudo systemctl start nvidia-fabricmanager && sudo systemctl enable nvidia-fabricmanager
 sudo apt -y install iputils-ping iperf3 iftop
 
+sudo reboot
+
 # Verify CUDA installation
 nvidia-smi
 nvcc --version
-
-sudo reboot
 
 aws configure set default.region us-east-1 
 
 # Existing EBS volume
 aws_metadata_token=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"`
-availability_zone=`curl -X POST "http://169.254.169.254/latest/meta-data/placement/availability-zone"`
-aws ec2 describe-volumes --filters Name=availability-zone,Values=$availability_zone --query "Volumes[*].{ID:VolumeId,Size:Size,Type:VolumeType,State:State,AZ:AvailabilityZone,Device:Attachments[0].Device}" --output table
+availability_zone=`curl -H "X-aws-ec2-metadata-token: $aws_metadata_token" http://169.254.169.254/latest/meta-data/placement/availability-zone`
+aws ec2 describe-volumes --filters Name=availability-zone,Values=$availability_zone Name=status,Values=available --query "Volumes[*].{ID:VolumeId,Name:Tags[?Key=='Name'].Value|[0],Size:Size,Type:VolumeType,State:State,AZ:AvailabilityZone}" --output table
 
 # Fill in volume_id
-volume_id=
-
-# Attach the volume to the instance
+volume_id=vol-0fabd6fcbb723fde3
+instance_id=`curl -H "X-aws-ec2-metadata-token: $aws_metadata_token" http://169.254.169.254/latest/meta-data/instance-id`
 aws ec2 attach-volume \
     --volume-id $volume_id \
     --instance-id $instance_id \
     --device /dev/sdf
-
-# Wait for the volume to be attached
-echo "Waiting for volume to be attached..."
 aws ec2 wait volume-in-use --volume-ids $volume_id
-# Check if the volume is attached
 aws ec2 describe-volumes --volume-ids $volume_id --query "Volumes[0].Attachments" --output table
 
-
-instance_id=`curl -X POST "http://169.254.169.254/latest/meta-data/instance-id"`
+# Existing EBS volume
 lsblk
 DEVICE_ID=nvme9n1
 sudo mkdir -p /workspace
