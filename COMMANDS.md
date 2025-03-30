@@ -89,14 +89,19 @@ sudo systemctl status nvidia-fabricmanager
 sudo mkdir /workspace
 
 # Only if EBS volume is new
-sudo mkfs -t xfs /dev/nvme1n1
-sudo mount /dev/nvme1n1 /workspace
-echo '/dev/nvme1n1  /workspace  xfs  defaults,nofail  0  2' | sudo tee -a /etc/fstab
+lsblk
+
+DEVICE_ID=nvme9n1
+sudo mkfs -t xfs /dev/$DEVICE_ID
+sudo mount /dev/$DEVICE_ID /workspace
+echo "/dev/$DEVICE_ID  /workspace  xfs  defaults,nofail  0  2" | sudo tee -a /etc/fstab
 sudo chown ubuntu:ubuntu /workspace
 
-cd /workspace && git clone https://github.com/aidando73/simpleRL-reason && realpath simpleRL-reason
-
-git checkout aidand-v2
+cd /workspace \
+&& git clone https://github.com/aidando73/simpleRL-reason \
+&& cd simpleRL-reason \
+&& git checkout aidand-v2 \
+&& echo "👉 $(realpath .)"
 ```
 
 ```bash
