@@ -126,6 +126,8 @@ tar -xf aws-efa-installer-1.38.1.tar.gz && cd aws-efa-installer
 
 sudo ./efa_installer.sh -y --mpi=openmpi4
 
+sudo systemctl status nvidia-fabricmanager
+
 fi_info -p efa -t FI_EP_RDM
 
 # Ec2 setup
