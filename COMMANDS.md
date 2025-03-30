@@ -70,6 +70,20 @@ python3 -c "import torch; print(f'NCCL Version: {torch.cuda.nccl.version()}')"
 
 ```
 
+```bash
+# Attaching existing EBS volume to instance
+DEVICE_ID=nvme9n1
+sudo mkdir -p /workspace
+sudo mount /dev/$DEVICE_ID /workspace
+sudo chown ubuntu:ubuntu /workspace
+
+# Setup new EBS volume
+sudo mkfs -t xfs /dev/nvme1n1
+sudo mount /dev/nvme1n1 /workspace
+echo '/dev/nvme1n1  /workspace  xfs  defaults,nofail  0  2' | sudo tee -a /etc/fstab
+sudo chown ubuntu:ubuntu /workspace
+```
+
 
 ```bash
 # EFA setup: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa-start-nccl.html
