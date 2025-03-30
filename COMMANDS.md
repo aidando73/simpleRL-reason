@@ -2,10 +2,11 @@ Assumes Ubuntu 22.04
 
 
 ```bash
-# One time setup
-cp sample.envrc .envrc
-# Go to https://wandb.ai/authorize and fill in the WANDB_API_KEY
-source .envrc
+# Get Weights & Biases API key from AWS Secrets Manager
+echo "export WANDB_API_KEY=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:838892012396:secret:wandb_api_key-rg9keb --query SecretString --output text | jq -r '.wandb_api_key')" >> .envrc
+echo "export MASTER_NODE_IP=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)" >> .envrc
+
+
 direnv allow
 
 # Install CUDA
