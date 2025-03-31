@@ -5,8 +5,7 @@ Assumes Ubuntu 22.04
 # We'll use:
 # https://aws.amazon.com/releasenotes/aws-deep-learning-ami-gpu-pytorch-2-4-ubuntu-22-04/
 
-# Test EFA
-fi_info
+./setup-ec2.sh
 
 # One time setup
 echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
@@ -14,11 +13,11 @@ source ~/.bashrc
 sudo apt install -y jq awscli
 sudo apt -y install iputils-ping iperf3 iftop
 
-sudo reboot
-
 # Verify CUDA installation
 nvidia-smi
-nvcc --version
+
+# Test EFA
+fi_info
 
 aws configure set default.region us-east-1 
 
