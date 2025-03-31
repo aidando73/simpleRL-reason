@@ -92,17 +92,12 @@ echo "export MASTER_NODE_IP=$(curl -H "X-aws-ec2-metadata-token: $aws_metadata_t
 direnv allow
 # Copy .envrc to worker node
 
-
-source ~/miniconda3/bin/activate && conda create -y --prefix ./env python=3.10
-source ~/miniconda3/bin/activate && conda activate ./env
 pip install uv
-TORCH_CUDA_DSA=1 uv pip install "torch==2.4.0" --force-reinstall --index-url https://download.pytorch.org/whl/cu124
 uv pip install flash-attn --no-build-isolation
 uv pip install -e .
 
 # launch the master node of ray
 tmux
-source ~/miniconda3/bin/activate && conda activate ./env
 ray start --head \
 --node-ip-address $MASTER_NODE_IP \
 --num-gpus 8 \
@@ -111,7 +106,6 @@ ray start --head \
 
 # Worker nodes
 tmux
-source ~/miniconda3/bin/activate && conda activate ./env
 ray start --address $MASTER_NODE_IP:6379  --num-gpus 8
 
 # From master node
