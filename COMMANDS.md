@@ -142,3 +142,6 @@ NCCL tests:
 
 EFA - w/ Placement group + RDMA
 NCCL tests: 
+
+
+First instance launch time: Tue Apr 01 2025 07:44:08 GMT+1100
