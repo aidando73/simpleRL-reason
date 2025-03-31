@@ -22,7 +22,7 @@ export HDFS_CHECKPOINT_PATH=/workspace/simpleRL-reason/checkpoints
 export HDFS_LOG_PATH=/workspace/simpleRL-reason/logs
 mkdir -p $HDFS_LOG_PATH
 mkdir -p $HDFS_CHECKPOINT_PATH
-export RUN_NAME=v1
+export RUN_NAME=3
 # export RAY_RUNTIME_ENV_TEMPORARY_REFERENCE_EXPIRATION_S=1800  # Add this line
 export HYDRA_FULL_ERROR=1
 
