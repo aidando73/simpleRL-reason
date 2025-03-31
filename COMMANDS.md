@@ -39,7 +39,7 @@ export NCCL_DEBUG=INFO
 -host $MASTER_IP,$WORKER_IP \
 /usr/local/cuda-12.4/efa/test-cuda-12.4/all_reduce_perf \
 -b 8 \
--e 1M \
+-e 16G \
 -f 2 \
 -g 8 \
 --timeout 10
@@ -166,6 +166,7 @@ ping -c 10 $MASTER_NODE_IP
 
 sudo apt install iftop
 sudo iftop
-
-cd /workspace && git clone git@github.com:aidando73/nccl-tests.git && cd nccl-tests && git checkout aidand-ec2-tests && realpath .
 ```
+
+### NCCL tests
+1MB: 1.17, 256MB: 6.40, 1GB: 7.46, 
