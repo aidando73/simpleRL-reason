@@ -70,7 +70,7 @@ source ~/.bashrc
 conda create --name pytorch2 --clone pytorch
 conda activate pytorch
 pip install uv
-uv pip install flash-attn --no-build-isolation
+uv pip install flash-attn==2.5.0 --no-build-isolation
 uv pip install --overrides overrides.txt -e .
 
 # launch the master node of ray
