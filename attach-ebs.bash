@@ -5,9 +5,9 @@ availability_zone=`curl -H "X-aws-ec2-metadata-token: $aws_metadata_token" http:
 aws ec2 describe-volumes --filters Name=availability-zone,Values=$availability_zone Name=status,Values=available --query "Volumes[*].{ID:VolumeId,Name:Tags[?Key=='Name'].Value|[0],Size:Size,Type:VolumeType,State:State,AZ:AvailabilityZone}" --output table
 
 # Prompt user for volume ID
-read -p "Enter the volume ID to attach (e.g., vol-0123456789abcdef0): " volume_id
+echo "Enter the volume ID to attach (e.g., vol-0123456789abcdef0): "
+read volume_id
 
-volume_id=vol-0fabd6fcbb723fde3
 instance_id=`curl -H "X-aws-ec2-metadata-token: $aws_metadata_token" http://169.254.169.254/latest/meta-data/instance-id`
 aws ec2 attach-volume \
     --volume-id $volume_id \
@@ -17,7 +17,8 @@ aws ec2 wait volume-in-use --volume-ids $volume_id
 aws ec2 describe-volumes --volume-ids $volume_id --query "Volumes[0].Attachments" --output table
 
 lsblk
-read -p "Please enter in the device name e.g., nvme9n1" device_name
+echo "Please enter in the device name e.g., nvme9n1: "
+read device_name
 sudo mkdir -p /workspace
 sudo mount /dev/$device_name /workspace
 echo "/dev/$device_name  /workspace  xfs  defaults,nofail  0  2" | sudo tee -a /etc/fstab
@@ -25,4 +26,4 @@ sudo chown ubuntu:ubuntu /workspace
 
 echo "EBS volume mounted at /workspace"
 
-find /workspace -type f -o -type d | sort
+ls -l /workspace

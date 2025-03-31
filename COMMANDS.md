@@ -1,6 +1,9 @@
 Assumes Ubuntu 22.04
 
 ```bash
+aws configure set default.region us-east-1 
+./attach-ebs.bash
+
 git checkout aidand-v4 && git pull
 
 # Verify CUDA installation
@@ -10,9 +13,6 @@ nvidia-smi
 fi_info -p efa
 /opt/amazon/efa/test/efa_test.sh
 
-aws configure set default.region us-east-1 
-
-./attach-ebs.bash
 
 # Test NCCL
 # Fetch ips
