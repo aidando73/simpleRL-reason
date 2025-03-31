@@ -69,8 +69,7 @@ conda create --name pytorch2 --clone pytorch
 conda activate pytorch
 pip install uv
 uv pip install flash-attn --no-build-isolation
-uv pip install --overrides overrides.txt vllm==0.6.3
-uv pip install -e .
+uv pip install --overrides overrides.txt -e .
 
 # launch the master node of ray
 tmux
