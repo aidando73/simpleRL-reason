@@ -41,8 +41,7 @@ export NCCL_DEBUG=INFO
 -b 8 \
 -e 16G \
 -f 2 \
--g 8 \
---timeout 10
+-g 8
 
 aws configure set default.region us-east-1 
 
@@ -169,4 +168,4 @@ sudo iftop
 ```
 
 ### NCCL tests
-1MB: 1.17, 256MB: 6.40, 1GB: 7.46, 
+1MB: 1.17, 256MB: 6.40, 1GB: 7.46, 16GB: 9.28 (GB/s)
