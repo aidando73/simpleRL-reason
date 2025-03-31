@@ -76,20 +76,6 @@ export NCCL_DEBUG=INFO
 -g 8
 
 
-# New EBS volume
-lsblk
-DEVICE_ID=nvme9n1
-sudo mkdir -p /workspace
-sudo mkfs -t xfs /dev/$DEVICE_ID #!!! Will destroy existing data on volume
-sudo mount /dev/$DEVICE_ID /workspace
-echo "/dev/$DEVICE_ID  /workspace  xfs  defaults,nofail  0  2" | sudo tee -a /etc/fstab
-sudo chown ubuntu:ubuntu /workspace
-cd /workspace \
-&& git clone https://github.com/aidando73/simpleRL-reason \
-&& cd simpleRL-reason \
-&& git checkout aidand-v2 \
-&& echo "👉 $(realpath .)"
-
 # Run on master
 : > .envrc
 echo "export WANDB_API_KEY=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:838892012396:secret:wandb_api_key-rg9keb --query SecretString --output text | jq -r '.WANDB_API_KEY')" >> .envrc
@@ -110,6 +96,7 @@ uv pip install -e .
 
 # launch the master node of ray
 tmux
+conda activate pytorch2
 ray start --head \
 --node-ip-address $MASTER_NODE_IP \
 --num-gpus 8 \
@@ -118,6 +105,7 @@ ray start --head \
 
 # Worker nodes
 tmux
+conda activate pytorch2
 ray start --address $MASTER_NODE_IP:6379  --num-gpus 8
 
 # From master node
@@ -158,6 +146,20 @@ python3 -c "import torch; print(f'NCCL Version: {torch.cuda.nccl.version()}')"
 # To view ray logs
 tail -f /tmp/ray/session_*/logs/*
 
+
+# New EBS volume
+lsblk
+DEVICE_ID=nvme9n1
+sudo mkdir -p /workspace
+sudo mkfs -t xfs /dev/$DEVICE_ID #!!! Will destroy existing data on volume
+sudo mount /dev/$DEVICE_ID /workspace
+echo "/dev/$DEVICE_ID  /workspace  xfs  defaults,nofail  0  2" | sudo tee -a /etc/fstab
+sudo chown ubuntu:ubuntu /workspace
+cd /workspace \
+&& git clone https://github.com/aidando73/simpleRL-reason \
+&& cd simpleRL-reason \
+&& git checkout aidand-v2 \
+&& echo "👉 $(realpath .)"
 
 # Testing bandwidth
 sudo apt-get install -y iperf3
