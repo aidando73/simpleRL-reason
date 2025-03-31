@@ -18,30 +18,8 @@ cat ~/.ssh/id_ed25519.pub >> ~/.ssh/authorized_keys
 nvidia-smi
 
 # Test EFA
-fi_info
+fi_info -p efa
 /opt/amazon/efa/test/efa_test.sh
-
-# Test NCCL
-aws_metadata_token=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"`
-echo "export MASTER_NODE_IP=$(curl -H "X-aws-ec2-metadata-token: $aws_metadata_token" http://169.254.169.254/latest/meta-data/local-ipv4)" >> .envrc
-echo "export WORKER_NODE_IP=TODO" >> .envrc # ip addr on worker node & fill in
-direnv allow
-# Test ssh connections
-# From master to worker
-ssh $WORKER_IP
-# From worker to master
-ssh $MASTER_IP
-# Then run actual nccl test
-export NCCL_DEBUG=INFO
-/opt/amazon/openmpi/bin/mpirun \
--x NCCL_DEBUG=INFO \
---verbose \
--host $MASTER_IP,$WORKER_IP \
-/usr/local/cuda-12.4/efa/test-cuda-12.4/all_reduce_perf \
--b 8 \
--e 16G \
--f 2 \
--g 8
 
 aws configure set default.region us-east-1 
 
@@ -59,14 +37,44 @@ aws ec2 attach-volume \
     --device /dev/sdf
 aws ec2 wait volume-in-use --volume-ids $volume_id
 aws ec2 describe-volumes --volume-ids $volume_id --query "Volumes[0].Attachments" --output table
+lsblk
 
 # Existing EBS volume
-lsblk
 DEVICE_ID=nvme9n1
 sudo mkdir -p /workspace
 sudo mount /dev/$DEVICE_ID /workspace
 echo "/dev/$DEVICE_ID  /workspace  xfs  defaults,nofail  0  2" | sudo tee -a /etc/fstab
 sudo chown ubuntu:ubuntu /workspace
+
+cd /workspace
+
+# Test NCCL
+# On master node
+aws_metadata_token=`curl --silent -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"`
+echo "export MASTER_NODE_IP=$(curl --silent -H "X-aws-ec2-metadata-token: $aws_metadata_token" http://169.254.169.254/latest/meta-data/local-ipv4)" >> .envrc
+# On worker node
+aws_metadata_token=`curl --silent -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"`
+echo "Copy this to .envrc on master node:"
+echo "export WORKER_NODE_IP=$(curl --silent -H "X-aws-ec2-metadata-token: $aws_metadata_token" http://169.254.169.254/latest/meta-data/local-ipv4)"
+direnv allow
+
+# Test ssh connections
+# From master to worker
+ssh $WORKER_IP
+# From worker to master
+ssh $MASTER_IP
+# Then run actual nccl test
+export NCCL_DEBUG=INFO
+/opt/amazon/openmpi/bin/mpirun \
+-x NCCL_DEBUG=INFO \
+--verbose \
+-host $MASTER_IP,$WORKER_IP \
+/usr/local/cuda-12.4/efa/test-cuda-12.4/all_reduce_perf \
+-b 8 \
+-e 16G \
+-f 2 \
+-g 8
+
 
 # New EBS volume
 lsblk
