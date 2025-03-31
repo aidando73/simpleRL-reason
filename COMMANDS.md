@@ -23,21 +23,7 @@ fi_info -p efa
 
 aws configure set default.region us-east-1 
 
-# Existing EBS volume
-
-
-# Fill in volume_id
-
-lsblk
-
-# Existing EBS volume
-DEVICE_ID=nvme9n1
-sudo mkdir -p /workspace
-sudo mount /dev/$DEVICE_ID /workspace
-echo "/dev/$DEVICE_ID  /workspace  xfs  defaults,nofail  0  2" | sudo tee -a /etc/fstab
-sudo chown ubuntu:ubuntu /workspace
-
-cd /workspace
+./attach-ebs.bash
 
 # Test NCCL
 # On master node
@@ -80,14 +66,14 @@ direnv allow
 conda init
 source ~/.bashrc
 conda create --name pytorch2 --clone pytorch
-conda activate pytorch2
+conda activate pytorch
 pip install uv
 uv pip install flash-attn --no-build-isolation
 uv pip install -e .
 
 # launch the master node of ray
 tmux
-conda activate pytorch2
+conda activate pytorch
 ray start --head \
 --node-ip-address $MASTER_NODE_IP \
 --num-gpus 8 \
@@ -96,7 +82,7 @@ ray start --head \
 
 # Worker nodes
 tmux
-conda activate pytorch2
+conda activate pytorch
 ray start --address $MASTER_NODE_IP:6379  --num-gpus 8
 
 # From master node
