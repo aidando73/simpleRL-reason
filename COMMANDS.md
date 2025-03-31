@@ -69,7 +69,7 @@ conda create --name pytorch2 --clone pytorch
 conda activate pytorch
 pip install uv
 uv pip install flash-attn --no-build-isolation
-uv pip install -c constraints.txt vllm==0.6.3
+uv pip install --overrides overrides.txt vllm==0.6.3
 uv pip install -e .
 
 # launch the master node of ray
