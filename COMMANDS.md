@@ -1,6 +1,8 @@
 Assumes Ubuntu 22.04
 
 ```bash
+git checkout aidand-v4 && git pull
+
 # Verify CUDA installation
 nvidia-smi
 
