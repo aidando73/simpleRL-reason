@@ -228,6 +228,7 @@ class ActorRolloutRefWorker(Worker):
         print(f"NCCL_SOCKET_IFNAME: {os.environ.get('NCCL_SOCKET_IFNAME', 'None')}")
         print(f"NCCL_P2P_DISABLE: {os.environ.get('NCCL_P2P_DISABLE', 'None')}")
         print(f"NCCL_IB_DISABLE: {os.environ.get('NCCL_IB_DISABLE', 'None')}")
+        print(f"VLLM_ATTENTION_BACKEND: {os.environ.get('VLLM_ATTENTION_BACKEND', 'None')}")
 
         print(f'rank {self.rank} barrier')
         torch.distributed.barrier()
