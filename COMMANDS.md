@@ -78,7 +78,7 @@ direnv allow
 source ~/miniconda3/bin/activate && conda create -y --prefix ./env python=3.10
 source ~/miniconda3/bin/activate && conda activate ./env
 pip install uv
-uv pip install "torch==2.4.0" --index-url https://download.pytorch.org/whl/cu124
+TORCH_CUDA_DSA=1 uv pip install "torch==2.4.0" --force-reinstall --index-url https://download.pytorch.org/whl/cu124
 uv pip install flash-attn --no-build-isolation
 uv pip install -e .
 
@@ -112,6 +112,11 @@ bash train_grpo_math_tune_ray.sh \
 # Diagnostics
 source ~/miniconda3/bin/activate && conda activate ./env
 source .envrc
+
+ python -m "torch.utils.collect_env"
+# Check PyTorch version
+python3 -c "import torch; print(f'PyTorch version: {torch.__version__}')"
+
 python3 -c "import torch; print(torch.version.cuda)"
 python3 -c "import torch; print(torch.cuda.is_available())"
 # Check CUDA devices
