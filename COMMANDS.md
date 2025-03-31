@@ -2,6 +2,9 @@ Assumes Ubuntu 22.04
 
 
 ```bash
+# We'll use:
+# https://aws.amazon.com/releasenotes/aws-deep-learning-ami-gpu-pytorch-2-4-ubuntu-22-04/
+
 # Test EFA
 fi_info
 
