@@ -17,6 +17,8 @@ fi_info -p efa
 # Test NCCL
 # Fetch ips
 # On master
+sed -i '/export MASTER_NODE_IP=/d' .envrc
+sed -i '/export WORKER_NODE_IP=/d' .envrc
 echo "export MASTER_NODE_IP=$(./fetch-ip.bash)" >> .envrc
 # On worker
 echo "Copy this to .envrc on worker node:"
@@ -38,7 +40,7 @@ export FI_EFA_USE_DEVICE_RDMA=1
 -host $MASTER_NODE_IP,$WORKER_NODE_IP \
 /usr/local/cuda-12.4/efa/test-cuda-12.4/all_reduce_perf \
 -b 8 \
--e 256M \
+-e 16G \
 -f 2 \
 -g 8
 
@@ -140,13 +142,25 @@ ping -c 10 $MASTER_NODE_IP
 ```
 
 EFA - baseline
-NCCL tests: 1MB: 1.17, 256MB: 6.40, 1GB: 7.46, 16GB: 9.28 (GB/s)
+NCCL tests (GB/s):
+- 1MB: 1.17
+- 256MB: 6.40
+- 1GB: 7.46
+- 16GB: 9.28
 
 EFA - w/ Placement group
-NCCL tests:
+NCCL tests (GB/s):
+- 1MB: 1.19
+- 256MB: 6.43
+- 1GB: 7.42
+- 16GB: 9.25
 
 EFA - w/ Placement group + RDMA
-NCCL tests: 
+NCCL tests (GB/s):
+- 1MB: 1.19
+- 256MB: 6.40
+- 1GB: 7.44
+- 16GB: 9.25
 
 
 First instance launch time: Tue Apr 01 2025 07:44:08 GMT+1100
