@@ -42,8 +42,10 @@ ssh $WORKER_NODE_IP
 ssh $MASTER_NODE_IP
 # Then run actual nccl test
 export NCCL_DEBUG=INFO
+export FI_EFA_USE_DEVICE_RDMA=1
 /opt/amazon/openmpi/bin/mpirun \
 -x NCCL_DEBUG=INFO \
+-x FI_EFA_USE_DEVICE_RDMA=1 \
 --verbose \
 -host $MASTER_NODE_IP,$WORKER_NODE_IP \
 /usr/local/cuda-12.4/efa/test-cuda-12.4/all_reduce_perf \

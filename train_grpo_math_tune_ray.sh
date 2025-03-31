@@ -6,6 +6,7 @@ export NCCL_DEBUG=INFO
 export RAY_BACKEND_LOG_LEVEL=debug
 export RAY_DEDUP_LOGS=0
 export VLLM_ATTENTION_BACKEND=XFORMERS
+export FI_EFA_USE_DEVICE_RDMA=1
 # export NCCL_SOCKET_IFNAME=podnet1
 # export GLOO_SOCKET_IFNAME=podnet1
 # export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5
@@ -182,7 +183,8 @@ ray job submit --address=$MASTER_NODE_IP:6379 \
           "https_proxy": "",
           "NCCL_DEBUG": "'$NCCL_DEBUG'",
           "RAY_DEDUP_LOGS": "'$RAY_DEDUP_LOGS'",
-          "VLLM_ATTENTION_BACKEND": "'$VLLM_ATTENTION_BACKEND'"
+          "VLLM_ATTENTION_BACKEND": "'$VLLM_ATTENTION_BACKEND'",
+          "FI_EFA_USE_DEVICE_RDMA": "'$FI_EFA_USE_DEVICE_RDMA'"
         }
     }' \
   -- python -m verl.trainer.main_ppo \
