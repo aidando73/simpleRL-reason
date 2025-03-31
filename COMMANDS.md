@@ -94,7 +94,8 @@ direnv allow
 
 conda init
 source ~/.bashrc
-conda activate pytorch
+conda create --name pytorch2 --clone pytorch
+conda activate pytorch2
 pip install uv
 uv pip install flash-attn --no-build-isolation
 uv pip install -e .
