@@ -1,19 +1,6 @@
 Assumes Ubuntu 22.04
 
-
 ```bash
-# We'll use:
-# https://aws.amazon.com/releasenotes/aws-deep-learning-ami-gpu-pytorch-2-4-ubuntu-22-04/
-
-./setup-ec2.sh
-
-# One time setup
-echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
-source ~/.bashrc
-sudo apt install -y jq awscli
-sudo apt -y install iputils-ping iperf3 iftop
-cat ~/.ssh/id_ed25519.pub >> ~/.ssh/authorized_keys
-
 # Verify CUDA installation
 nvidia-smi
 
@@ -26,10 +13,10 @@ aws configure set default.region us-east-1
 ./attach-ebs.bash
 
 # Test NCCL
-# On master node
+# Get IP on master node
 aws_metadata_token=`curl --silent -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"`
 echo "export MASTER_NODE_IP=$(curl --silent -H "X-aws-ec2-metadata-token: $aws_metadata_token" http://169.254.169.254/latest/meta-data/local-ipv4)" >> .envrc
-# On worker node
+# Get IP on worker node
 aws_metadata_token=`curl --silent -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"`
 echo "Copy this to .envrc on master node:"
 echo "export WORKER_NODE_IP=$(curl --silent -H "X-aws-ec2-metadata-token: $aws_metadata_token" http://169.254.169.254/latest/meta-data/local-ipv4)"
@@ -98,9 +85,6 @@ bash train_grpo_math_tune_ray.sh \
 
 
 # Diagnostics
-source ~/miniconda3/bin/activate && conda activate ./env
-source .envrc
-
  python -m "torch.utils.collect_env"
 # Check PyTorch version
 python3 -c "import torch; print(f'PyTorch version: {torch.__version__}')"
@@ -144,11 +128,15 @@ iperf3 -s
 # Client
 iperf3 -c $MASTER_NODE_IP -t 10
 
-sudo apt install iputils-ping
 ping -c 10 $MASTER_NODE_IP
 
-sudo apt install iftop
-sudo iftop
 ```
 
+EFA - baseline
 NCCL tests: 1MB: 1.17, 256MB: 6.40, 1GB: 7.46, 16GB: 9.28 (GB/s)
+
+EFA - w/ Placement group
+NCCL tests:
+
+EFA - w/ Placement group + RDMA
+NCCL tests: 
