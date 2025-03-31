@@ -167,5 +167,4 @@ sudo apt install iftop
 sudo iftop
 ```
 
-### NCCL tests
-1MB: 1.17, 256MB: 6.40, 1GB: 7.46, 16GB: 9.28 (GB/s)
+NCCL tests: 1MB: 1.17, 256MB: 6.40, 1GB: 7.46, 16GB: 9.28 (GB/s)
