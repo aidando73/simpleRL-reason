@@ -65,9 +65,6 @@ echo "export MASTER_NODE_IP=$(curl -H "X-aws-ec2-metadata-token: $aws_metadata_t
 direnv allow
 # Copy .envrc to worker node
 
-conda init
-source ~/.bashrc
-conda create --name pytorch2 --clone pytorch
 conda activate pytorch
 pip install uv
 uv pip install flash-attn==2.5.0 --no-build-isolation
