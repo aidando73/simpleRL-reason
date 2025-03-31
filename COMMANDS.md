@@ -60,18 +60,18 @@ direnv allow
 
 # Test ssh connections
 # From master to worker
-ssh $WORKER_IP
+ssh $WORKER_NODE_IP
 # From worker to master
-ssh $MASTER_IP
+ssh $MASTER_NODE_IP
 # Then run actual nccl test
 export NCCL_DEBUG=INFO
 /opt/amazon/openmpi/bin/mpirun \
 -x NCCL_DEBUG=INFO \
 --verbose \
--host $MASTER_IP,$WORKER_IP \
+-host $MASTER_NODE_IP,$WORKER_NODE_IP \
 /usr/local/cuda-12.4/efa/test-cuda-12.4/all_reduce_perf \
 -b 8 \
--e 16G \
+-e 256M \
 -f 2 \
 -g 8
 
