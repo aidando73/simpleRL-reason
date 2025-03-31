@@ -106,6 +106,13 @@ python3 -c "import torch; print(f'NCCL Version: {torch.cuda.nccl.version()}')"
 # To view ray logs
 tail -f /tmp/ray/session_*/logs/*
 
+# If dashboard is down
+ray status
+ray memory
+ray list
+ray job list
+ray job status 03000000
+ray job logs 03000000
 
 # New EBS volume
 lsblk
