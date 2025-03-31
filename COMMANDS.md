@@ -15,13 +15,12 @@ aws configure set default.region us-east-1
 ./attach-ebs.bash
 
 # Test NCCL
-# Get IP on master node
-aws_metadata_token=`curl --silent -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"`
-echo "export MASTER_NODE_IP=$(curl --silent -H "X-aws-ec2-metadata-token: $aws_metadata_token" http://169.254.169.254/latest/meta-data/local-ipv4)" >> .envrc
-# Get IP on worker node
-aws_metadata_token=`curl --silent -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"`
-echo "Copy this to .envrc on master node:"
-echo "export WORKER_NODE_IP=$(curl --silent -H "X-aws-ec2-metadata-token: $aws_metadata_token" http://169.254.169.254/latest/meta-data/local-ipv4)"
+# Fetch ips
+# On master
+echo "export MASTER_NODE_IP=$(./fetch-ip.bash)" >> .envrc
+# On worker
+echo "Copy this to .envrc on worker node:"
+echo "export WORKER_NODE_IP=$(./fetch-ip.bash)"
 direnv allow
 
 # Test ssh connections
@@ -48,8 +47,7 @@ export FI_EFA_USE_DEVICE_RDMA=1
 : > .envrc
 echo "export WANDB_API_KEY=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:838892012396:secret:wandb_api_key-rg9keb --query SecretString --output text | jq -r '.WANDB_API_KEY')" >> .envrc
 
-aws_metadata_token=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"`
-echo "export MASTER_NODE_IP=$(curl -H "X-aws-ec2-metadata-token: $aws_metadata_token" http://169.254.169.254/latest/meta-data/local-ipv4)" >> .envrc
+echo "export MASTER_NODE_IP=$(./fetch-ip.bash)" >> .envrc
 
 direnv allow
 # Copy .envrc to worker node
