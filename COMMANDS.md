@@ -108,6 +108,8 @@ python3 -c "import torch; print(f'NCCL Version: {torch.cuda.nccl.version()}')"
 # To view ray logs
 tail -f /tmp/ray/session_*/logs/*
 
+huggingface-cli login
+huggingface-cli upload aidando73/simplerl-v4-checkpoints .
 
 # New EBS volume
 lsblk
