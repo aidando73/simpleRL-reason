@@ -6,10 +6,6 @@
 ./setup-ec2.bash
 
 # One time setup
-echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
-source ~/.bashrc
-sudo apt install -y jq awscli
-sudo apt -y install iputils-ping iperf3 iftop
 cat ~/.ssh/id_ed25519.pub >> ~/.ssh/authorized_keys
 
 conda init
