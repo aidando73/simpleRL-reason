@@ -38,7 +38,16 @@ ubuntu@ip-172-31-65-134:/workspace/simpleRL-reason/checkpoints/3_Qwen_Qwen2.5-Ma
     ├── optim_world_size_16_rank_8.pt
     └── optim_world_size_16_rank_9.pt
 - Worker node checkpoint 20:
-
+- Discovered - EBS volume is full.
+th-7B_batch1024_rollout8_klcoef0.0001_entcoef0.001_simplelr_math_35$ df
+Filesystem     1K-blocks      Used Available Use% Mounted on
+/dev/root        7941576   3201468   4723724  41% /
+tmpfs             232528         0    232528   0% /dev/shm
+tmpfs              93012       872     92140   1% /run
+tmpfs               5120         0      5120   0% /run/lock
+/dev/xvda15       106832      6190    100642   6% /boot/efi
+tmpfs              46504         4     46500   1% /run/user/1000
+/dev/xvdf      262016000 261983972     32028 100% /workspace
 
 Next steps:
 - Turn on 1 checkpoint save per step - see if issue occurs on step 16
