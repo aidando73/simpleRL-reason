@@ -38,3 +38,10 @@ ubuntu@ip-172-31-65-134:/workspace/simpleRL-reason/checkpoints/3_Qwen_Qwen2.5-Ma
     ├── optim_world_size_16_rank_8.pt
     └── optim_world_size_16_rank_9.pt
 - Worker node checkpoint 20:
+
+
+Next steps:
+- Turn on 1 checkpoint save per step - see if issue occurs on step 16
+- Change random state?
+
+Done:
