@@ -110,6 +110,13 @@ tail -f /tmp/ray/session_*/logs/*
 
 huggingface-cli login
 huggingface-cli upload aidando73/simplerl-v4-checkpoints .
+# If dashboard is down
+ray status
+ray memory
+ray list
+ray job list
+ray job status 03000000
+ray job logs 03000000
 
 # New EBS volume
 lsblk
