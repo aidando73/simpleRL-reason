@@ -109,7 +109,7 @@ python3 -c "import torch; print(f'NCCL Version: {torch.cuda.nccl.version()}')"
 tail -f /tmp/ray/session_*/logs/*
 
 conda activate pytorch
-huggingface-cli login
+huggingface-cli login --token $(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:838892012396:secret:hf_token-zZPDUq --query SecretString --output text | jq -r '.HF_TOKEN')
 huggingface-cli upload aidando73/simplerl-v4-checkpoints .
 # If dashboard is down
 ray status
