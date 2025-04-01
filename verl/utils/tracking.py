@@ -44,6 +44,9 @@ class Tracking(object):
                 config=config,
                 id="4l2mwcsr",
                 resume="must",
+                settings=wandb.Settings(
+                    x_stats_disk_paths=("/", "/workspace"),
+                )
             )
             self.logger['wandb'] = wandb
 
