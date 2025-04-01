@@ -108,6 +108,7 @@ python3 -c "import torch; print(f'NCCL Version: {torch.cuda.nccl.version()}')"
 # To view ray logs
 tail -f /tmp/ray/session_*/logs/*
 
+conda activate pytorch
 huggingface-cli login
 huggingface-cli upload aidando73/simplerl-v4-checkpoints .
 # If dashboard is down
