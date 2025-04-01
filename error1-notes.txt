@@ -1,0 +1,40 @@
+- Error is occuring for
+    PID 12810 - rank 5
+    PID 12808 - rank 3
+    PID 12807 - rank 2
+    PID 12811 - rank 6
+    PID 12812 - rank 7
+    PID 12806 - rank 1
+    PID 12650 - rank 0
+    PID 37782 (main_task)
+- Occurs only on the master node.
+- Occurs on checkpoint 20 but not 15
+- Master node checkpoint 20:
+ubuntu@ip-172-31-65-134:/workspace/simpleRL-reason/checkpoints/3_Qwen_Qwen2.5-Math-7B_batch1024_rollout8_klcoef0.0001_entcoef0.001_simplelr_math_35/global_step_20$ tree .
+.
+└── actor
+    ├── extra_state_world_size_16_rank_10.pt
+    ├── extra_state_world_size_16_rank_11.pt
+    ├── extra_state_world_size_16_rank_12.pt
+    ├── extra_state_world_size_16_rank_13.pt
+    ├── extra_state_world_size_16_rank_14.pt
+    ├── extra_state_world_size_16_rank_15.pt
+    ├── extra_state_world_size_16_rank_8.pt
+    ├── extra_state_world_size_16_rank_9.pt
+    ├── model_world_size_16_rank_10.pt
+    ├── model_world_size_16_rank_11.pt
+    ├── model_world_size_16_rank_12.pt
+    ├── model_world_size_16_rank_13.pt
+    ├── model_world_size_16_rank_14.pt
+    ├── model_world_size_16_rank_15.pt
+    ├── model_world_size_16_rank_8.pt
+    ├── model_world_size_16_rank_9.pt
+    ├── optim_world_size_16_rank_10.pt
+    ├── optim_world_size_16_rank_11.pt
+    ├── optim_world_size_16_rank_12.pt
+    ├── optim_world_size_16_rank_13.pt
+    ├── optim_world_size_16_rank_14.pt
+    ├── optim_world_size_16_rank_15.pt
+    ├── optim_world_size_16_rank_8.pt
+    └── optim_world_size_16_rank_9.pt
+- Worker node checkpoint 20:
