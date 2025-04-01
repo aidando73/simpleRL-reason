@@ -50,7 +50,10 @@ tmpfs              46504         4     46500   1% /run/user/1000
 /dev/xvdf      262016000 261983972     32028 100% /workspace
 
 Next steps:
-- Turn on 1 checkpoint save per step - see if issue occurs on step 16
-- Change random state?
+- Setup some kind of disk space monitoring
 
 Done:
+
+Won't do:
+- Turn on 1 checkpoint save per step - see if issue occurs on step 16
+- Change random state?
