@@ -49,10 +49,26 @@ curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
 	&& apt update \
 	&& apt install ngrok
 
+# 1Password CLI
+curl -sS https://downloads.1password.com/linux/keys/1password.asc | \
+  gpg --dearmor --output /usr/share/keyrings/1password-archive-keyring.gpg && \
+  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/$(dpkg --print-architecture) stable main" | \
+  tee /etc/apt/sources.list.d/1password.list && \
+  mkdir -p /etc/debsig/policies/AC2D62742012EA22/ && \
+  curl -sS https://downloads.1password.com/linux/debian/debsig/1password.pol | \
+  tee /etc/debsig/policies/AC2D62742012EA22/1password.pol && \
+  mkdir -p /usr/share/debsig/keyrings/AC2D62742012EA22 && \
+  curl -sS https://downloads.1password.com/linux/keys/1password.asc | \
+  gpg --dearmor --output /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg && \
+  apt update && apt install 1password-cli
+
 ngrok config add-authtoken __auth_token__
 
+op account add --address my.1password.com --email aidando73@gmail.com
+eval $(op signin)
+
 tmux
-ngrok http 8265 --basic-auth "aidando73:$WANDB_API_KEY"
+ngrok http 8265 --basic-auth "aidando73:$(op read op://Personal/Ngrok/password)"
 
 # Diagnostics
  python -m "torch.utils.collect_env"
