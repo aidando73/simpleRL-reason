@@ -25,6 +25,7 @@ mkdir -p $HDFS_CHECKPOINT_PATH
 export RUN_NAME=4-single-node
 # export RAY_RUNTIME_ENV_TEMPORARY_REFERENCE_EXPIRATION_S=1800  # Add this line
 export HYDRA_FULL_ERROR=1
+export CUDA_LAUNCH_BLOCKING=1
 
 # Default values
 TRAIN_BATCH_SIZE=256
@@ -184,7 +185,8 @@ ray job submit --address=127.0.0.1:6379 \
           "NCCL_DEBUG": "'$NCCL_DEBUG'",
           "RAY_DEDUP_LOGS": "'$RAY_DEDUP_LOGS'",
           "VLLM_ATTENTION_BACKEND": "'$VLLM_ATTENTION_BACKEND'",
-          "FI_EFA_USE_DEVICE_RDMA": "'$FI_EFA_USE_DEVICE_RDMA'"
+          "FI_EFA_USE_DEVICE_RDMA": "'$FI_EFA_USE_DEVICE_RDMA'",
+          "CUDA_LAUNCH_BLOCKING": "'$CUDA_LAUNCH_BLOCKING'"
         }
     }' \
   -- python -m verl.trainer.main_ppo \

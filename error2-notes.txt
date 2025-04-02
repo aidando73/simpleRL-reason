@@ -1,0 +1,1 @@
+- vllm self.cpu_cache = self._allocate_kv_cache(self.num_cpu_blocks, "cpu") File vllm/worker/cache_engine.py", line 82, in _allocate_kv_cache torch.zeros(kv_cache_shape, RuntimeError: CUDA error: invalid argument
