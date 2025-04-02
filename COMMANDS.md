@@ -68,7 +68,7 @@ op account add --address my.1password.com --email aidando73@gmail.com
 eval $(op signin)
 
 tmux
-ngrok http 8265 --basic-auth "aidando73:$(op read op://Personal/Ngrok/password)"
+ngrok http 8265 --basic-auth "$(op read op://Personal/Ngrok/username):$(op read op://Personal/Ngrok/password)"
 
 # Diagnostics
  python -m "torch.utils.collect_env"
