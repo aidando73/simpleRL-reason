@@ -1,64 +1,27 @@
 Assumes Ubuntu 22.04
 
 ```bash
+git clone git@github.com:aidando73/simpleRL-reason.git
 git checkout aidand-v4 && git pull
 
 # Verify CUDA installation
 nvidia-smi
 
-# Test EFA
-fi_info -p efa
-/opt/amazon/efa/test/efa_test.sh
-
-
-# Test NCCL
-# Fetch ips
-# On master
-sed -i '/export MASTER_NODE_IP=/d' .envrc
-sed -i '/export WORKER_NODE_IP=/d' .envrc
-echo "export MASTER_NODE_IP=$(./fetch-ip.bash)" >> .envrc
-# On worker
-echo "Copy this to .envrc on worker node:"
-echo "export WORKER_NODE_IP=$(./fetch-ip.bash)"
-direnv allow
-
-# Test ssh connections
-# From master to worker
-ssh $WORKER_NODE_IP
-# From worker to master
-ssh $MASTER_NODE_IP
-# Then run actual nccl test
-export NCCL_DEBUG=INFO
-export FI_EFA_USE_DEVICE_RDMA=1
-/opt/amazon/openmpi/bin/mpirun \
--x NCCL_DEBUG=INFO \
--x FI_EFA_USE_DEVICE_RDMA=1 \
---verbose \
--host $MASTER_NODE_IP,$WORKER_NODE_IP \
-/usr/local/cuda-12.4/efa/test-cuda-12.4/all_reduce_perf \
--b 8 \
--e 16G \
--f 2 \
--g 8
-
-
 # Run on master
-: > .envrc
-echo "export WANDB_API_KEY=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:838892012396:secret:wandb_api_key-rg9keb --query SecretString --output text | jq -r '.WANDB_API_KEY')" >> .envrc
-
-echo "export MASTER_NODE_IP=$(./fetch-ip.bash)" >> .envrc
+cp .envrc.example .envrc
 
 direnv allow
 # Copy .envrc to worker node
 
-conda activate pytorch
+source ~/miniconda3/bin/activate && conda create --prefix ./env python=3.10
+source ~/miniconda3/bin/activate && conda activate ./env
 pip install uv
 uv pip install flash-attn==2.5.0 --no-build-isolation
 uv pip install --overrides overrides.txt -e .
 
 # launch the master node of ray
 tmux
-conda activate pytorch
+conda activate ./env
 ray start --head \
 --node-ip-address $MASTER_NODE_IP \
 --num-gpus 8 \
@@ -67,7 +30,7 @@ ray start --head \
 
 # Worker nodes
 tmux
-conda activate pytorch
+conda activate ./env
 ray start --address $MASTER_NODE_IP:6379  --num-gpus 8
 
 # From master node
