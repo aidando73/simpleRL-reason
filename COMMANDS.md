@@ -16,7 +16,8 @@ source ~/miniconda3/bin/activate && conda create --prefix ./env python=3.10
 source ~/miniconda3/bin/activate && conda activate ./env
 pip install uv
 uv pip install "torch==2.4.0" --index-url https://download.pytorch.org/whl/cu124
-uv pip install flash-attn==2.5.0 --no-build-isolation
+# uv pip install flash-attn==2.5.0 --no-build-isolation
+uv pip install flash-attn --no-build-isolation
 uv pip install -e .
 
 # launch the master node of ray
