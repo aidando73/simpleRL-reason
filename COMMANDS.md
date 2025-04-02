@@ -1,9 +1,6 @@
 Assumes Ubuntu 22.04
 
 ```bash
-aws configure set default.region us-east-1 
-./attach-ebs.bash
-
 git checkout aidand-v4 && git pull
 
 # Verify CUDA installation
