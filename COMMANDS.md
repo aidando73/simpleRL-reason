@@ -1,6 +1,9 @@
 Assumes Ubuntu 22.04
 
 ```bash
+echo "export TZ=Australia/Sydney" >> ~/.bashrc
+source ~/.bashrc
+
 cd /workspace && git clone git@github.com:aidando73/simpleRL-reason.git && cd simpleRL-reason && git checkout aidand-v5 && git pull && realpath .
 
 # Verify CUDA installation
@@ -20,22 +23,14 @@ uv pip install "torch==2.4.0" --index-url https://download.pytorch.org/whl/cu124
 uv pip install flash-attn --no-build-isolation
 uv pip install -e .
 
-# launch the master node of ray
 tmux
-conda activate ./env
+source ~/miniconda3/bin/activate && conda activate ./env
 ray start --head \
---node-ip-address $MASTER_NODE_IP \
+--node-ip-address 127.0.0.1 \
 --num-gpus 8 \
 --dashboard-host 0.0.0.0 \
 --include-dashboard true
 
-# Worker nodes
-tmux
-conda activate ./env
-ray start --address $MASTER_NODE_IP:6379  --num-gpus 8
-
-# From master node
-tmux attach
 bash train_grpo_math_tune_ray.sh \
     --model_name Qwen/Qwen2.5-Math-7B \
     --train_batch_size 1024 \
@@ -87,51 +82,7 @@ ray job list
 ray job status 03000000
 ray job logs 03000000
 
-# New EBS volume
-lsblk
-DEVICE_ID=nvme9n1
-sudo mkdir -p /workspace
-sudo mkfs -t xfs /dev/$DEVICE_ID #!!! Will destroy existing data on volume
-sudo mount /dev/$DEVICE_ID /workspace
-echo "/dev/$DEVICE_ID  /workspace  xfs  defaults,nofail  0  2" | sudo tee -a /etc/fstab
-sudo chown ubuntu:ubuntu /workspace
-cd /workspace \
-&& git clone https://github.com/aidando73/simpleRL-reason \
-&& cd simpleRL-reason \
-&& git checkout aidand-v2 \
-&& echo "👉 $(realpath .)"
-
-# Testing bandwidth
-sudo apt-get install -y iperf3
-# Server
-iperf3 -s
-# Client
-iperf3 -c $MASTER_NODE_IP -t 10
-
-ping -c 10 $MASTER_NODE_IP
-
 ```
 
-EFA - baseline
-NCCL tests (GB/s):
-- 1MB: 1.17
-- 256MB: 6.40
-- 1GB: 7.46
-- 16GB: 9.28
-
-EFA - w/ Placement group
-NCCL tests (GB/s):
-- 1MB: 1.19
-- 256MB: 6.43
-- 1GB: 7.42
-- 16GB: 9.25
-
-EFA - w/ Placement group + RDMA
-NCCL tests (GB/s):
-- 1MB: 1.19
-- 256MB: 6.40
-- 1GB: 7.44
-- 16GB: 9.25
-
-
-First instance launch time: Tue Apr 01 2025 07:44:08 GMT+1100
+Pod launch time: Wed Apr 02 2025 18:34:00 GMT+1100
+- ~40m to start training

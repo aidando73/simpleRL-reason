@@ -6,7 +6,7 @@ export NCCL_DEBUG=INFO
 export RAY_BACKEND_LOG_LEVEL=debug
 export RAY_DEDUP_LOGS=0
 export VLLM_ATTENTION_BACKEND=XFORMERS
-export FI_EFA_USE_DEVICE_RDMA=1
+# export FI_EFA_USE_DEVICE_RDMA=1
 # export NCCL_SOCKET_IFNAME=podnet1
 # export GLOO_SOCKET_IFNAME=podnet1
 # export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5
@@ -22,7 +22,7 @@ export HDFS_CHECKPOINT_PATH=/workspace/simpleRL-reason/checkpoints
 export HDFS_LOG_PATH=/workspace/simpleRL-reason/logs
 mkdir -p $HDFS_LOG_PATH
 mkdir -p $HDFS_CHECKPOINT_PATH
-export RUN_NAME=3
+export RUN_NAME=4-single-node
 # export RAY_RUNTIME_ENV_TEMPORARY_REFERENCE_EXPIRATION_S=1800  # Add this line
 export HYDRA_FULL_ERROR=1
 
@@ -173,7 +173,7 @@ echo -e "Training with the following parameters:\nTrain Batch Size: $TRAIN_BATCH
 
 mkdir -p $HDFS_CHECKPOINT_PATH/$RUN_NAME
 
-ray job submit --address=$MASTER_NODE_IP:6379 \
+ray job submit --address=127.0.0.1:6379 \
   --entrypoint-num-cpus=1 \
   --runtime-env-json='{
         "working_dir": "'${WORKING_DIR}'",
@@ -228,7 +228,7 @@ ray job submit --address=$MASTER_NODE_IP:6379 \
   trainer.remove_previous_ckpt=$REMOVE_PREVIOUS_CKPT \
   trainer.experiment_name=$RUN_NAME \
   trainer.n_gpus_per_node=8 \
-  trainer.nnodes=2 \
+  trainer.nnodes=1 \
   trainer.remove_clip=$REMOVE_CLIP \
   trainer.save_freq=$SAVE_FREQ \
   trainer.test_freq=$TEST_FREQ \
