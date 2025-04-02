@@ -7,7 +7,7 @@ cd /workspace && git clone git@github.com:aidando73/simpleRL-reason.git && cd si
 nvidia-smi
 
 # Run on master
-cp .envrc.example .envrc
+cp sample.envrc .envrc
 
 direnv allow
 # Copy .envrc to worker node
@@ -15,8 +15,9 @@ direnv allow
 source ~/miniconda3/bin/activate && conda create --prefix ./env python=3.10
 source ~/miniconda3/bin/activate && conda activate ./env
 pip install uv
+uv pip install "torch==2.4.0" --index-url https://download.pytorch.org/whl/cu124
 uv pip install flash-attn==2.5.0 --no-build-isolation
-uv pip install --overrides overrides.txt -e .
+uv pip install -e .
 
 # launch the master node of ray
 tmux
