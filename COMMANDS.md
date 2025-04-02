@@ -1,8 +1,7 @@
 Assumes Ubuntu 22.04
 
 ```bash
-git clone git@github.com:aidando73/simpleRL-reason.git
-git checkout aidand-v4 && git pull
+cd /workspace && git clone git@github.com:aidando73/simpleRL-reason.git && cd simpleRL-reason && git checkout aidand-v5 && git pull && realpath .
 
 # Verify CUDA installation
 nvidia-smi
