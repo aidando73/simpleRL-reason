@@ -24,6 +24,12 @@ provider "aws" {
   region  = "us-east-2"
 }
 
+data "aws_ami" "gpu_ami" {
+    most_recent = true
+    owners = ["self"]
+    name_regex = "Custom Deep Learning OSS Nvidia Driver AMI GPU PyTorch 2.4.1 (Ubuntu 22.04) 20250401"
+}
+
 # Use the default VPC
 data "aws_vpc" "default" {
   default = true
@@ -67,18 +73,6 @@ resource "aws_security_group" "efa_cluster_sg" {
 
   tags = {
     Name = "efa-cluster-sg"
-  }
-}
-
-# Copy AMI from us-east-1 to us-east-2
-resource "aws_ami_copy" "gpu_ami" {
-  name                = "Custom Deep Learning OSS Nvidia Driver AMI GPU PyTorch 2.4.1 (Ubuntu 22.04) 20250401"
-  description         = "Copy from us-east-1"
-  source_ami_id       = "ami-06a8b9bbfc400713f"  # Original AMI ID in us-east-1
-  source_ami_region   = "us-east-1"
-
-  tags = {
-    Name = "copied-gpu-ami"
   }
 }
 
