@@ -52,7 +52,7 @@ curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
 ngrok config add-authtoken __auth_token__
 
 tmux
-ngrok http 8265 --basic-auth "$NGROK_USERNAME:$NGROK_PASSWORD"
+ngrok http 8265 --url=lasting-swan-large.ngrok-free.app --basic-auth "$NGROK_USERNAME:$NGROK_PASSWORD"
 
 # Diagnostics
  python -m "torch.utils.collect_env"
@@ -79,8 +79,8 @@ tail -f /tmp/ray/session_*/logs/*
 source ~/miniconda3/bin/activate && conda activate ./env
 # sudo apt install -y python3-pip && pip install -U "huggingface_hub[cli]" && export PATH="/home/ubuntu/.local/bin:$PATH"
 huggingface-cli login --token $HF_TOKEN
-huggingface-cli upload aidando73/simplerl-v5-checkpoints latest_checkpointed_iteration.txt
 realpath . > path.txt && huggingface-cli upload aidando73/simplerl-v5-checkpoints path.txt
+huggingface-cli upload aidando73/simplerl-v5-checkpoints latest_checkpointed_iteration.txt
 huggingface-cli upload aidando73/simplerl-v5-checkpoints global_step_20 global_step_20
 
 # Download checkpoint
