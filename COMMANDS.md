@@ -81,7 +81,7 @@ source ~/miniconda3/bin/activate && conda activate ./env
 huggingface-cli login --token $HF_TOKEN
 realpath . > path.txt && huggingface-cli upload aidando73/simplerl-v5-checkpoints path.txt
 huggingface-cli upload aidando73/simplerl-v5-checkpoints latest_checkpointed_iteration.txt
-huggingface-cli upload aidando73/simplerl-v5-checkpoints global_step_20 global_step_20
+huggingface-cli upload aidando73/simplerl-v5-checkpoints global_step_35 global_step_35
 
 cd logs && huggingface-cli upload aidando73/simplerl-v5-checkpoints .
 
