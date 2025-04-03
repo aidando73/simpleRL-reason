@@ -151,26 +151,9 @@ ping -c 10 $MASTER_NODE_IP
 
 ```
 
-EFA - baseline
-NCCL tests (GB/s):
-- 1MB: 1.17
-- 256MB: 6.40
-- 1GB: 7.46
-- 16GB: 9.28
 
-EFA - w/ Placement group
-NCCL tests (GB/s):
-- 1MB: 1.19
-- 256MB: 6.43
-- 1GB: 7.42
-- 16GB: 9.25
-
-EFA - w/ Placement group + RDMA
-NCCL tests (GB/s):
-- 1MB: 1.19
-- 256MB: 6.40
-- 1GB: 7.44
-- 16GB: 9.25
-
-
-First instance launch time: Tue Apr 01 2025 07:44:08 GMT+1100
+```bash
+# Infra:
+brew tap hashicorp/tap
+brew install hashicorp/tap/terraform
+```
