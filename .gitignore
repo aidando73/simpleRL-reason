@@ -126,3 +126,7 @@ model_scope_model
 .envrc
 
 cuda-keyring_1.1-1_all.deb
+
+.terraform
+terraform.tfstate
+terraform.tfstate.backup
