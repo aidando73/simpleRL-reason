@@ -76,9 +76,9 @@ python3 -c "import torch; print(f'NCCL Version: {torch.cuda.nccl.version()}')"
 # To view ray logs
 tail -f /tmp/ray/session_*/logs/*
 
-conda activate pytorch
+source ~/miniconda3/bin/activate && conda activate ./env
 # sudo apt install -y python3-pip && pip install -U "huggingface_hub[cli]" && export PATH="/home/ubuntu/.local/bin:$PATH"
-huggingface-cli login --token $(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:838892012396:secret:hf_token-zZPDUq --query SecretString --output text | jq -r '.HF_TOKEN')
+huggingface-cli login --token $HF_TOKEN
 huggingface-cli upload aidando73/simplerl-v4-checkpoints global_step_15 global_step_15
 
 # Download checkpoint
