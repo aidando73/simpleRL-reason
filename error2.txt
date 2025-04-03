@@ -1,0 +1,408 @@
+[36m(main_task pid=35903)[0m step:1 - response_length/mean:389.081 - response_length/max:3072.000 - response_length/min:2.000 - response_length/clip_ratio:0.010 - global_seqlen/min:475829.000 - global_seqlen/max:537027.000 - global_seqlen/minmax_diff:61198.000 - global_seqlen/balanced_min:508162.000 - global_seqlen/balanced_max:508163.000 - global_seqlen/mean:508162.875 - actor/kl_loss:0.000 - actor/kl_coef:0.000 - actor/entropy_loss:0.641 - actor/pg_loss:-0.102 - actor/pg_clipfrac:0.000 - actor/ppo_kl:0.000 - actor/grad_norm:7.281 - mfu/actor:0.020 - actor/lr:0.000 - critic/score/mean:0.224 - critic/score/max:1.000 - critic/score/min:0.000 - critic/rewards/mean:0.224 - critic/rewards/max:1.000 - critic/rewards/min:0.000 - critic/advantages/mean:0.139 - critic/advantages/max:2.475 - critic/advantages/min:-2.475 - critic/returns/mean:0.139 - critic/returns/max:2.475 - critic/returns/min:-2.475 - filtered_response_length/mean:389.081 - filtered_response_length/max:3072.000 - filtered_response_length/min:2.000 - filtered_response_length/clip_ratio:0.010 - prompt_length/mean:107.172 - prompt_length/max:389.000 - prompt_length/min:47.000 - prompt_length/clip_ratio:0.000 - timing_s/gen:146.122 - timing_s/old_log_prob:55.593 - timing_s/ref:53.668 - timing_s/adv:53.588 - timing_s/update_actor:1221.173 - timing_s/step:1530.905 - timing_per_token_ms/update_actor:0.300 - timing_per_token_ms/gen:0.046 - timing_per_token_ms/adv:0.013 - timing_per_token_ms/ref:0.013
+[36m(main_task pid=35903)[0m Unhandled error (suppress with 'RAY_IGNORE_UNHANDLED_ERRORS=1'): [36mray::WorkerDict.actor_rollout_generate_sequences()[39m (pid=36340, ip=172.21.0.2, actor_id=5701472c6894b821ecae303a04000000, repr=<verl.single_controller.ray.base.WorkerDict object at 0x70a9a1070130>)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/single_controller/ray/base.py", line 401, in func
+[36m(main_task pid=35903)[0m     return getattr(self.worker_dict[key], name)(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/single_controller/base/decorator.py", line 404, in inner
+[36m(main_task pid=35903)[0m     return func(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/workers/fsdp_workers.py", line 488, in generate_sequences
+[36m(main_task pid=35903)[0m     output = self.rollout.generate_sequences(prompts=prompts)
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+[36m(main_task pid=35903)[0m     return func(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/workers/rollout/vllm_rollout/vllm_rollout.py", line 176, in generate_sequences
+[36m(main_task pid=35903)[0m     self.inference_engine.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/llm.py", line 146, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.llm_engine.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/llm_engine_sp.py", line 347, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.model_executor.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/spmd_gpu_executor.py", line 157, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.worker._init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/worker.py", line 240, in _init_cache_engine
+[36m(main_task pid=35903)[0m     super()._init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/worker.py", line 275, in _init_cache_engine
+[36m(main_task pid=35903)[0m     self.cache_engine = [
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/worker.py", line 276, in <listcomp>
+[36m(main_task pid=35903)[0m     CacheEngine(self.cache_config, self.model_config,
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/cache_engine.py", line 65, in __init__
+[36m(main_task pid=35903)[0m     self.cpu_cache = self._allocate_kv_cache(self.num_cpu_blocks, "cpu")
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/cache_engine.py", line 82, in _allocate_kv_cache
+[36m(main_task pid=35903)[0m     torch.zeros(kv_cache_shape,
+[36m(main_task pid=35903)[0m RuntimeError: CUDA error: invalid argument
+[36m(main_task pid=35903)[0m CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+[36m(main_task pid=35903)[0m For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+[36m(main_task pid=35903)[0m Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+[36m(main_task pid=35903)[0m Unhandled error (suppress with 'RAY_IGNORE_UNHANDLED_ERRORS=1'): [36mray::WorkerDict.actor_rollout_generate_sequences()[39m (pid=36344, ip=172.21.0.2, actor_id=0762317a4dd7fdccf3e5dc8a04000000, repr=<verl.single_controller.ray.base.WorkerDict object at 0x742e3fa68160>)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/single_controller/ray/base.py", line 401, in func
+[36m(main_task pid=35903)[0m     return getattr(self.worker_dict[key], name)(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/single_controller/base/decorator.py", line 404, in inner
+[36m(main_task pid=35903)[0m     return func(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/workers/fsdp_workers.py", line 488, in generate_sequences
+[36m(main_task pid=35903)[0m     output = self.rollout.generate_sequences(prompts=prompts)
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+[36m(main_task pid=35903)[0m     return func(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/workers/rollout/vllm_rollout/vllm_rollout.py", line 176, in generate_sequences
+[36m(main_task pid=35903)[0m     self.inference_engine.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/llm.py", line 146, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.llm_engine.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/llm_engine_sp.py", line 347, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.model_executor.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/spmd_gpu_executor.py", line 157, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.worker._init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/worker.py", line 240, in _init_cache_engine
+[36m(main_task pid=35903)[0m     super()._init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/worker.py", line 275, in _init_cache_engine
+[36m(main_task pid=35903)[0m     self.cache_engine = [
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/worker.py", line 276, in <listcomp>
+[36m(main_task pid=35903)[0m     CacheEngine(self.cache_config, self.model_config,
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/cache_engine.py", line 65, in __init__
+[36m(main_task pid=35903)[0m     self.cpu_cache = self._allocate_kv_cache(self.num_cpu_blocks, "cpu")
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/cache_engine.py", line 82, in _allocate_kv_cache
+[36m(main_task pid=35903)[0m     torch.zeros(kv_cache_shape,
+[36m(main_task pid=35903)[0m RuntimeError: CUDA error: invalid argument
+[36m(main_task pid=35903)[0m CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+[36m(main_task pid=35903)[0m For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+[36m(main_task pid=35903)[0m Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+[36m(main_task pid=35903)[0m wandb: uploading output.log; uploading wandb-summary.json; uploading history steps 1-1, summary
+[36m(main_task pid=35903)[0m Unhandled error (suppress with 'RAY_IGNORE_UNHANDLED_ERRORS=1'): [36mray::WorkerDict.actor_rollout_generate_sequences()[39m (pid=36139, ip=172.21.0.2, actor_id=98da6a4900aebc4f7815d4cc04000000, repr=<verl.single_controller.ray.base.WorkerDict object at 0x7d1972c889a0>)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/single_controller/ray/base.py", line 401, in func
+[36m(main_task pid=35903)[0m     return getattr(self.worker_dict[key], name)(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/single_controller/base/decorator.py", line 404, in inner
+[36m(main_task pid=35903)[0m     return func(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/workers/fsdp_workers.py", line 488, in generate_sequences
+[36m(main_task pid=35903)[0m     output = self.rollout.generate_sequences(prompts=prompts)
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+[36m(main_task pid=35903)[0m     return func(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/workers/rollout/vllm_rollout/vllm_rollout.py", line 176, in generate_sequences
+[36m(main_task pid=35903)[0m     self.inference_engine.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/llm.py", line 146, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.llm_engine.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/llm_engine_sp.py", line 347, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.model_executor.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/spmd_gpu_executor.py", line 157, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.worker._init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/worker.py", line 240, in _init_cache_engine
+[36m(main_task pid=35903)[0m     super()._init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/worker.py", line 275, in _init_cache_engine
+[36m(main_task pid=35903)[0m     self.cache_engine = [
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/worker.py", line 276, in <listcomp>
+[36m(main_task pid=35903)[0m     CacheEngine(self.cache_config, self.model_config,
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/cache_engine.py", line 65, in __init__
+[36m(main_task pid=35903)[0m     self.cpu_cache = self._allocate_kv_cache(self.num_cpu_blocks, "cpu")
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/cache_engine.py", line 82, in _allocate_kv_cache
+[36m(main_task pid=35903)[0m     torch.zeros(kv_cache_shape,
+[36m(main_task pid=35903)[0m RuntimeError: CUDA error: invalid argument
+[36m(main_task pid=35903)[0m CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+[36m(main_task pid=35903)[0m For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+[36m(main_task pid=35903)[0m Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+[36m(main_task pid=35903)[0m Unhandled error (suppress with 'RAY_IGNORE_UNHANDLED_ERRORS=1'): [36mray::WorkerDict.actor_rollout_generate_sequences()[39m (pid=36345, ip=172.21.0.2, actor_id=c1ec87d754166cae157075a504000000, repr=<verl.single_controller.ray.base.WorkerDict object at 0x768f6bc709a0>)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/single_controller/ray/base.py", line 401, in func
+[36m(main_task pid=35903)[0m     return getattr(self.worker_dict[key], name)(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/single_controller/base/decorator.py", line 404, in inner
+[36m(main_task pid=35903)[0m     return func(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/workers/fsdp_workers.py", line 488, in generate_sequences
+[36m(main_task pid=35903)[0m     output = self.rollout.generate_sequences(prompts=prompts)
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+[36m(main_task pid=35903)[0m     return func(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/workers/rollout/vllm_rollout/vllm_rollout.py", line 176, in generate_sequences
+[36m(main_task pid=35903)[0m     self.inference_engine.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/llm.py", line 146, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.llm_engine.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/llm_engine_sp.py", line 347, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.model_executor.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/spmd_gpu_executor.py", line 157, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.worker._init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/worker.py", line 240, in _init_cache_engine
+[36m(main_task pid=35903)[0m     super()._init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/worker.py", line 275, in _init_cache_engine
+[36m(main_task pid=35903)[0m     self.cache_engine = [
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/worker.py", line 276, in <listcomp>
+[36m(main_task pid=35903)[0m     CacheEngine(self.cache_config, self.model_config,
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/cache_engine.py", line 65, in __init__
+[36m(main_task pid=35903)[0m     self.cpu_cache = self._allocate_kv_cache(self.num_cpu_blocks, "cpu")
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/cache_engine.py", line 82, in _allocate_kv_cache
+[36m(main_task pid=35903)[0m     torch.zeros(kv_cache_shape,
+[36m(main_task pid=35903)[0m RuntimeError: CUDA error: invalid argument
+[36m(main_task pid=35903)[0m CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+[36m(main_task pid=35903)[0m For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+[36m(main_task pid=35903)[0m Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+[36m(main_task pid=35903)[0m Unhandled error (suppress with 'RAY_IGNORE_UNHANDLED_ERRORS=1'): [36mray::WorkerDict.actor_rollout_generate_sequences()[39m (pid=36342, ip=172.21.0.2, actor_id=775ddbb5c01cf26ddb7c491d04000000, repr=<verl.single_controller.ray.base.WorkerDict object at 0x7da95386c160>)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/single_controller/ray/base.py", line 401, in func
+[36m(main_task pid=35903)[0m     return getattr(self.worker_dict[key], name)(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/single_controller/base/decorator.py", line 404, in inner
+[36m(main_task pid=35903)[0m     return func(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/workers/fsdp_workers.py", line 488, in generate_sequences
+[36m(main_task pid=35903)[0m     output = self.rollout.generate_sequences(prompts=prompts)
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+[36m(main_task pid=35903)[0m     return func(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/workers/rollout/vllm_rollout/vllm_rollout.py", line 176, in generate_sequences
+[36m(main_task pid=35903)[0m     self.inference_engine.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/llm.py", line 146, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.llm_engine.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/llm_engine_sp.py", line 347, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.model_executor.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/spmd_gpu_executor.py", line 157, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.worker._init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/worker.py", line 240, in _init_cache_engine
+[36m(main_task pid=35903)[0m     super()._init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/worker.py", line 275, in _init_cache_engine
+[36m(main_task pid=35903)[0m     self.cache_engine = [
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/worker.py", line 276, in <listcomp>
+[36m(main_task pid=35903)[0m     CacheEngine(self.cache_config, self.model_config,
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/cache_engine.py", line 65, in __init__
+[36m(main_task pid=35903)[0m     self.cpu_cache = self._allocate_kv_cache(self.num_cpu_blocks, "cpu")
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/cache_engine.py", line 82, in _allocate_kv_cache
+[36m(main_task pid=35903)[0m     torch.zeros(kv_cache_shape,
+[36m(main_task pid=35903)[0m RuntimeError: CUDA error: invalid argument
+[36m(main_task pid=35903)[0m CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+[36m(main_task pid=35903)[0m For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+[36m(main_task pid=35903)[0m Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+[36m(main_task pid=35903)[0m wandb: uploading output.log; uploading wandb-summary.json; uploading config.yaml
+[36m(main_task pid=35903)[0m wandb: uploading output.log; uploading data
+[36m(main_task pid=35903)[0m Unhandled error (suppress with 'RAY_IGNORE_UNHANDLED_ERRORS=1'): [36mray::WorkerDict.actor_rollout_generate_sequences()[39m (pid=36339, ip=172.21.0.2, actor_id=345349db305cb9aa53de9e0804000000, repr=<verl.single_controller.ray.base.WorkerDict object at 0x771730854160>)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/single_controller/ray/base.py", line 401, in func
+[36m(main_task pid=35903)[0m     return getattr(self.worker_dict[key], name)(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/single_controller/base/decorator.py", line 404, in inner
+[36m(main_task pid=35903)[0m     return func(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/workers/fsdp_workers.py", line 488, in generate_sequences
+[36m(main_task pid=35903)[0m     output = self.rollout.generate_sequences(prompts=prompts)
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+[36m(main_task pid=35903)[0m     return func(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/workers/rollout/vllm_rollout/vllm_rollout.py", line 176, in generate_sequences
+[36m(main_task pid=35903)[0m     self.inference_engine.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/llm.py", line 146, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.llm_engine.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/llm_engine_sp.py", line 347, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.model_executor.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/spmd_gpu_executor.py", line 157, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.worker._init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/worker.py", line 240, in _init_cache_engine
+[36m(main_task pid=35903)[0m     super()._init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/worker.py", line 275, in _init_cache_engine
+[36m(main_task pid=35903)[0m     self.cache_engine = [
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/worker.py", line 276, in <listcomp>
+[36m(main_task pid=35903)[0m     CacheEngine(self.cache_config, self.model_config,
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/cache_engine.py", line 65, in __init__
+[36m(main_task pid=35903)[0m     self.cpu_cache = self._allocate_kv_cache(self.num_cpu_blocks, "cpu")
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/cache_engine.py", line 82, in _allocate_kv_cache
+[36m(main_task pid=35903)[0m     torch.zeros(kv_cache_shape,
+[36m(main_task pid=35903)[0m RuntimeError: CUDA error: invalid argument
+[36m(main_task pid=35903)[0m CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+[36m(main_task pid=35903)[0m For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+[36m(main_task pid=35903)[0m Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+[36m(main_task pid=35903)[0m Unhandled error (suppress with 'RAY_IGNORE_UNHANDLED_ERRORS=1'): [36mray::WorkerDict.actor_rollout_generate_sequences()[39m (pid=36341, ip=172.21.0.2, actor_id=0b52487ae947e308bf67da2804000000, repr=<verl.single_controller.ray.base.WorkerDict object at 0x7fb1b0860070>)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/single_controller/ray/base.py", line 401, in func
+[36m(main_task pid=35903)[0m     return getattr(self.worker_dict[key], name)(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/single_controller/base/decorator.py", line 404, in inner
+[36m(main_task pid=35903)[0m     return func(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/workers/fsdp_workers.py", line 488, in generate_sequences
+[36m(main_task pid=35903)[0m     output = self.rollout.generate_sequences(prompts=prompts)
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+[36m(main_task pid=35903)[0m     return func(*args, **kwargs)
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/workers/rollout/vllm_rollout/vllm_rollout.py", line 176, in generate_sequences
+[36m(main_task pid=35903)[0m     self.inference_engine.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/llm.py", line 146, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.llm_engine.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/llm_engine_sp.py", line 347, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.model_executor.init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/spmd_gpu_executor.py", line 157, in init_cache_engine
+[36m(main_task pid=35903)[0m     self.worker._init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/worker.py", line 240, in _init_cache_engine
+[36m(main_task pid=35903)[0m     super()._init_cache_engine()
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/worker.py", line 275, in _init_cache_engine
+[36m(main_task pid=35903)[0m     self.cache_engine = [
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/worker.py", line 276, in <listcomp>
+[36m(main_task pid=35903)[0m     CacheEngine(self.cache_config, self.model_config,
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/cache_engine.py", line 65, in __init__
+[36m(main_task pid=35903)[0m     self.cpu_cache = self._allocate_kv_cache(self.num_cpu_blocks, "cpu")
+[36m(main_task pid=35903)[0m   File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/cache_engine.py", line 82, in _allocate_kv_cache
+[36m(main_task pid=35903)[0m     torch.zeros(kv_cache_shape,
+[36m(main_task pid=35903)[0m RuntimeError: CUDA error: invalid argument
+[36m(main_task pid=35903)[0m CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+[36m(main_task pid=35903)[0m For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+[36m(main_task pid=35903)[0m Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+[36m(main_task pid=35903)[0m wandb: uploading data
+[33m(raylet)[0m [2025-04-02 10:47:03,396 E 14701 14701] (raylet) node_manager.cc:2967: 1 Workers (tasks / actors) killed due to memory pressure (OOM), 0 Workers crashed due to other reasons at node (ID: 58a87372b741596dbccac87ed34c8e0f69a78e0c5824cf58eb8d4449, IP: 172.21.0.2) over the last time period. To see more information about the Workers killed on this node, use `ray logs raylet.out -ip 172.21.0.2`
+[33m(raylet)[0m 
+[33m(raylet)[0m Refer to the documentation on how to address the out of memory issue: https://docs.ray.io/en/latest/ray-core/scheduling/ray-oom-prevention.html. Consider provisioning more memory on this node or reducing task parallelism by requesting more CPUs per task. To adjust the kill threshold, set the environment variable `RAY_memory_usage_threshold` when starting Ray. To disable worker killing, set the environment variable `RAY_memory_monitor_refresh_ms` to zero.
+[36m(main_task pid=35903)[0m wandb:                                                                                
+[36m(main_task pid=35903)[0m wandb: 
+[36m(main_task pid=35903)[0m wandb: Run history:
+[36m(main_task pid=35903)[0m wandb:                  actor/entropy_loss ▁
+[36m(main_task pid=35903)[0m wandb:                     actor/grad_norm ▁
+[36m(main_task pid=35903)[0m wandb:                       actor/kl_coef ▁
+[36m(main_task pid=35903)[0m wandb:                       actor/kl_loss ▁
+[36m(main_task pid=35903)[0m wandb:                            actor/lr ▁
+[36m(main_task pid=35903)[0m wandb:                   actor/pg_clipfrac ▁
+[36m(main_task pid=35903)[0m wandb:                       actor/pg_loss ▁
+[36m(main_task pid=35903)[0m wandb:                        actor/ppo_kl ▁
+[36m(main_task pid=35903)[0m wandb:               critic/advantages/max ▁
+[36m(main_task pid=35903)[0m wandb:              critic/advantages/mean ▁
+[36m(main_task pid=35903)[0m wandb:               critic/advantages/min ▁
+[36m(main_task pid=35903)[0m wandb:                  critic/returns/max ▁
+[36m(main_task pid=35903)[0m wandb:                 critic/returns/mean ▁
+[36m(main_task pid=35903)[0m wandb:                  critic/returns/min ▁
+[36m(main_task pid=35903)[0m wandb:                  critic/rewards/max ▁
+[36m(main_task pid=35903)[0m wandb:                 critic/rewards/mean ▁
+[36m(main_task pid=35903)[0m wandb:                  critic/rewards/min ▁
+[36m(main_task pid=35903)[0m wandb:                    critic/score/max ▁
+[36m(main_task pid=35903)[0m wandb:                   critic/score/mean ▁
+[36m(main_task pid=35903)[0m wandb:                    critic/score/min ▁
+[36m(main_task pid=35903)[0m wandb: filtered_response_length/clip_ratio ▁
+[36m(main_task pid=35903)[0m wandb:        filtered_response_length/max ▁
+[36m(main_task pid=35903)[0m wandb:       filtered_response_length/mean ▁
+[36m(main_task pid=35903)[0m wandb:        filtered_response_length/min ▁
+[36m(main_task pid=35903)[0m wandb:          global_seqlen/balanced_max ▁
+[36m(main_task pid=35903)[0m wandb:          global_seqlen/balanced_min ▁
+[36m(main_task pid=35903)[0m wandb:                   global_seqlen/max ▁
+[36m(main_task pid=35903)[0m wandb:                  global_seqlen/mean ▁
+[36m(main_task pid=35903)[0m wandb:                   global_seqlen/min ▁
+[36m(main_task pid=35903)[0m wandb:           global_seqlen/minmax_diff ▁
+[36m(main_task pid=35903)[0m wandb:                           mfu/actor ▁
+[36m(main_task pid=35903)[0m wandb:            prompt_length/clip_ratio ▁
+[36m(main_task pid=35903)[0m wandb:                   prompt_length/max ▁
+[36m(main_task pid=35903)[0m wandb:                  prompt_length/mean ▁
+[36m(main_task pid=35903)[0m wandb:                   prompt_length/min ▁
+[36m(main_task pid=35903)[0m wandb:          response_length/clip_ratio ▁
+[36m(main_task pid=35903)[0m wandb:                 response_length/max ▁
+[36m(main_task pid=35903)[0m wandb:                response_length/mean ▁
+[36m(main_task pid=35903)[0m wandb:                 response_length/min ▁
+[36m(main_task pid=35903)[0m wandb:             timing_per_token_ms/adv ▁
+[36m(main_task pid=35903)[0m wandb:             timing_per_token_ms/gen ▁
+[36m(main_task pid=35903)[0m wandb:             timing_per_token_ms/ref ▁
+[36m(main_task pid=35903)[0m wandb:    timing_per_token_ms/update_actor ▁
+[36m(main_task pid=35903)[0m wandb:                        timing_s/adv ▁
+[36m(main_task pid=35903)[0m wandb:                        timing_s/gen ▁
+[36m(main_task pid=35903)[0m wandb:               timing_s/old_log_prob ▁
+[36m(main_task pid=35903)[0m wandb:                        timing_s/ref ▁
+[36m(main_task pid=35903)[0m wandb:                       timing_s/step ▁
+[36m(main_task pid=35903)[0m wandb:               timing_s/update_actor ▁
+[36m(main_task pid=35903)[0m wandb:  val/test_correctness/simplelr_qwen ▁
+[36m(main_task pid=35903)[0m wandb:        val/test_score/simplelr_qwen ▁
+[36m(main_task pid=35903)[0m wandb: 
+[36m(main_task pid=35903)[0m wandb: Run summary:
+[36m(main_task pid=35903)[0m wandb:                  actor/entropy_loss 0.64134
+[36m(main_task pid=35903)[0m wandb:                     actor/grad_norm 7.28116
+[36m(main_task pid=35903)[0m wandb:                       actor/kl_coef 0.0001
+[36m(main_task pid=35903)[0m wandb:                       actor/kl_loss 0.0002
+[36m(main_task pid=35903)[0m wandb:                            actor/lr 0.0
+[36m(main_task pid=35903)[0m wandb:                   actor/pg_clipfrac 4e-05
+[36m(main_task pid=35903)[0m wandb:                       actor/pg_loss -0.10221
+[36m(main_task pid=35903)[0m wandb:                        actor/ppo_kl 2e-05
+[36m(main_task pid=35903)[0m wandb:               critic/advantages/max 2.47487
+[36m(main_task pid=35903)[0m wandb:              critic/advantages/mean 0.13902
+[36m(main_task pid=35903)[0m wandb:               critic/advantages/min -2.47487
+[36m(main_task pid=35903)[0m wandb:                  critic/returns/max 2.47487
+[36m(main_task pid=35903)[0m wandb:                 critic/returns/mean 0.13902
+[36m(main_task pid=35903)[0m wandb:                  critic/returns/min -2.47487
+[36m(main_task pid=35903)[0m wandb:                  critic/rewards/max 1
+[36m(main_task pid=35903)[0m wandb:                 critic/rewards/mean 0.22375
+[36m(main_task pid=35903)[0m wandb:                  critic/rewards/min 0
+[36m(main_task pid=35903)[0m wandb:                    critic/score/max 1
+[36m(main_task pid=35903)[0m wandb:                   critic/score/mean 0.22375
+[36m(main_task pid=35903)[0m wandb:                    critic/score/min 0
+[36m(main_task pid=35903)[0m wandb: filtered_response_length/clip_ratio 0.00989
+[36m(main_task pid=35903)[0m wandb:        filtered_response_length/max 3072
+[36m(main_task pid=35903)[0m wandb:       filtered_response_length/mean 389.08093
+[36m(main_task pid=35903)[0m wandb:        filtered_response_length/min 2
+[36m(main_task pid=35903)[0m wandb:          global_seqlen/balanced_max 508163
+[36m(main_task pid=35903)[0m wandb:          global_seqlen/balanced_min 508162
+[36m(main_task pid=35903)[0m wandb:                   global_seqlen/max 537027
+[36m(main_task pid=35903)[0m wandb:                  global_seqlen/mean 508162.875
+[36m(main_task pid=35903)[0m wandb:                   global_seqlen/min 475829
+[36m(main_task pid=35903)[0m wandb:           global_seqlen/minmax_diff 61198
+[36m(main_task pid=35903)[0m wandb:                           mfu/actor 0.01972
+[36m(main_task pid=35903)[0m wandb:            prompt_length/clip_ratio 0
+[36m(main_task pid=35903)[0m wandb:                   prompt_length/max 389
+[36m(main_task pid=35903)[0m wandb:                  prompt_length/mean 107.17188
+[36m(main_task pid=35903)[0m wandb:                   prompt_length/min 47
+[36m(main_task pid=35903)[0m wandb:          response_length/clip_ratio 0.00989
+[36m(main_task pid=35903)[0m wandb:                 response_length/max 3072
+[36m(main_task pid=35903)[0m wandb:                response_length/mean 389.08093
+[36m(main_task pid=35903)[0m wandb:                 response_length/min 2
+[36m(main_task pid=35903)[0m wandb:             timing_per_token_ms/adv 0.01318
+[36m(main_task pid=35903)[0m wandb:             timing_per_token_ms/gen 0.04584
+[36m(main_task pid=35903)[0m wandb:             timing_per_token_ms/ref 0.0132
+[36m(main_task pid=35903)[0m wandb:    timing_per_token_ms/update_actor 0.30039
+[36m(main_task pid=35903)[0m wandb:                        timing_s/adv 53.58797
+[36m(main_task pid=35903)[0m wandb:                        timing_s/gen 146.12156
+[36m(main_task pid=35903)[0m wandb:               timing_s/old_log_prob 55.5926
+[36m(main_task pid=35903)[0m wandb:                        timing_s/ref 53.66788
+[36m(main_task pid=35903)[0m wandb:                       timing_s/step 1530.90534
+[36m(main_task pid=35903)[0m wandb:               timing_s/update_actor 1221.17319
+[36m(main_task pid=35903)[0m wandb:  val/test_correctness/simplelr_qwen 0.35484
+[36m(main_task pid=35903)[0m wandb:        val/test_score/simplelr_qwen 0.35484
+[36m(main_task pid=35903)[0m wandb: 
+[36m(main_task pid=35903)[0m wandb: 🚀 View run 4-single-node_Qwen_Qwen2.5-Math-7B_batch1024_rollout8_klcoef0.0001_entcoef0.001_simplelr_math_35 at: https://wandb.ai/aidando73-personal/simplerl-math-grpo/runs/gxffnat1
+[36m(main_task pid=35903)[0m wandb: ⭐️ View project at: https://wandb.ai/aidando73-personal/simplerl-math-grpo
+[36m(main_task pid=35903)[0m wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+[36m(main_task pid=35903)[0m wandb: Find logs at: ./wandb/run-20250402_101437-gxffnat1/logs
+Error executing job with overrides: ['algorithm.adv_estimator=grpo', 'data.train_files=/workspace/simpleRL-reason/train.parquet', 'data.val_files=/workspace/simpleRL-reason/test.parquet', 'data.train_batch_size=1024', 'data.val_batch_size=500', 'data.max_prompt_length=1024', 'data.max_response_length=3072', 'actor_rollout_ref.model.path=Qwen/Qwen2.5-Math-7B', 'actor_rollout_ref.actor.optim.lr=5e-7', 'actor_rollout_ref.model.use_remove_padding=True', 'actor_rollout_ref.actor.ppo_mini_batch_size=256', 'actor_rollout_ref.actor.ppo_micro_batch_size_per_gpu=2', 'actor_rollout_ref.actor.use_kl_loss=True', 'actor_rollout_ref.actor.kl_loss_coef=0.0001', 'actor_rollout_ref.actor.entropy_coeff=0.001', 'actor_rollout_ref.actor.clip_ratio=0.2', 'actor_rollout_ref.actor.kl_loss_type=low_var_kl', 'actor_rollout_ref.model.enable_gradient_checkpointing=True', 'actor_rollout_ref.actor.fsdp_config.param_offload=False', 'actor_rollout_ref.actor.fsdp_config.grad_offload=False', 'actor_rollout_ref.actor.fsdp_config.optimizer_offload=False', 'actor_rollout_ref.rollout.temperature=1.0', 'actor_rollout_ref.rollout.log_prob_micro_batch_size=160', 'actor_rollout_ref.rollout.tensor_model_parallel_size=2', 'actor_rollout_ref.rollout.name=vllm', 'actor_rollout_ref.rollout.gpu_memory_utilization=0.5', 'actor_rollout_ref.rollout.n=8', 'actor_rollout_ref.rollout.enable_chunked_prefill=False', 'actor_rollout_ref.rollout.max_num_batched_tokens=5096', 'actor_rollout_ref.rollout.micro_rollout_batch_size=1024', 'actor_rollout_ref.ref.log_prob_micro_batch_size=160', 'actor_rollout_ref.ref.fsdp_config.param_offload=True', 'algorithm.kl_ctrl.kl_coef=0.001', 'critic.ppo_micro_batch_size_per_gpu=4', 'trainer.critic_warmup=0', 'trainer.logger=[console,wandb]', 'trainer.project_name=simplerl-math-grpo', 'trainer.remove_previous_ckpt=False', 'trainer.experiment_name=4-single-node_Qwen_Qwen2.5-Math-7B_batch1024_rollout8_klcoef0.0001_entcoef0.001_simplelr_math_35', 'trainer.n_gpus_per_node=8', 'trainer.nnodes=1', 'trainer.remove_clip=False', 'trainer.save_freq=5', 'trainer.test_freq=5', 'trainer.default_local_dir=/workspace/simpleRL-reason/checkpoints/4-single-node_Qwen_Qwen2.5-Math-7B_batch1024_rollout8_klcoef0.0001_entcoef0.001_simplelr_math_35', 'trainer.total_epochs=20']
+Traceback (most recent call last):
+  File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/trainer/main_ppo.py", line 111, in main
+    run_ppo(config)
+  File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/trainer/main_ppo.py", line 119, in run_ppo
+    ray.get(main_task.remote(config, compute_score))
+  File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(RuntimeError): [36mray::main_task()[39m (pid=35903, ip=172.21.0.2)
+  File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/trainer/main_ppo.py", line 205, in main_task
+    trainer.fit()
+  File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/trainer/ppo/ray_trainer.py", line 820, in fit
+    gen_batch_output = self.actor_rollout_wg.generate_sequences(gen_batch)
+  File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/single_controller/ray/base.py", line 42, in func
+    output = ray.get(output)
+ray.exceptions.RayTaskError(RuntimeError): [36mray::WorkerDict.actor_rollout_generate_sequences()[39m (pid=36343, ip=172.21.0.2, actor_id=079cf059d02b657f5d3be9a604000000, repr=<verl.single_controller.ray.base.WorkerDict object at 0x7483404880d0>)
+  File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/single_controller/ray/base.py", line 401, in func
+    return getattr(self.worker_dict[key], name)(*args, **kwargs)
+  File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/single_controller/base/decorator.py", line 404, in inner
+    return func(*args, **kwargs)
+  File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/workers/fsdp_workers.py", line 488, in generate_sequences
+    output = self.rollout.generate_sequences(prompts=prompts)
+  File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/workers/rollout/vllm_rollout/vllm_rollout.py", line 176, in generate_sequences
+    self.inference_engine.init_cache_engine()
+  File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/llm.py", line 146, in init_cache_engine
+    self.llm_engine.init_cache_engine()
+  File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/llm_engine_sp.py", line 347, in init_cache_engine
+    self.model_executor.init_cache_engine()
+  File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/spmd_gpu_executor.py", line 157, in init_cache_engine
+    self.worker._init_cache_engine()
+  File "/tmp/ray/session_2025-04-02_08-11-37_293472_14319/runtime_resources/working_dir_files/_ray_pkg_bbb0692fbbe55811/verl/third_party/vllm/vllm_v_0_6_3/worker.py", line 240, in _init_cache_engine
+    super()._init_cache_engine()
+  File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/worker.py", line 275, in _init_cache_engine
+    self.cache_engine = [
+  File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/worker.py", line 276, in <listcomp>
+    CacheEngine(self.cache_config, self.model_config,
+  File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/cache_engine.py", line 65, in __init__
+    self.cpu_cache = self._allocate_kv_cache(self.num_cpu_blocks, "cpu")
+  File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/cache_engine.py", line 82, in _allocate_kv_cache
+    torch.zeros(kv_cache_shape,
+RuntimeError: CUDA error: invalid argument
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+
+[31m---------------------------------------[39m
+[31mJob 'raysubmit_MpdYNGxWy66dwgjP' failed[39m
+[31m---------------------------------------[39m
+
+Status message: Job entrypoint command failed with exit code 1, last available logs (truncated to 20,000 chars):
+  File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/cache_engine.py", line 65, in __init__
+    self.cpu_cache = self._allocate_kv_cache(self.num_cpu_blocks, "cpu")
+  File "/workspace/simpleRL-reason/env/lib/python3.10/site-packages/vllm/worker/cache_engine.py", line 82, in _allocate_kv_cache
+    torch.zeros(kv_cache_shape,
+RuntimeError: CUDA error: invalid argument
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+
