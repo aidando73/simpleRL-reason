@@ -79,11 +79,13 @@ tail -f /tmp/ray/session_*/logs/*
 source ~/miniconda3/bin/activate && conda activate ./env
 # sudo apt install -y python3-pip && pip install -U "huggingface_hub[cli]" && export PATH="/home/ubuntu/.local/bin:$PATH"
 huggingface-cli login --token $HF_TOKEN
-huggingface-cli upload aidando73/simplerl-v4-checkpoints global_step_15 global_step_15
+huggingface-cli upload aidando73/simplerl-v5-checkpoints latest_checkpointed_iteration.txt
+realpath . > path.txt && huggingface-cli upload aidando73/simplerl-v5-checkpoints path.txt
+huggingface-cli upload aidando73/simplerl-v5-checkpoints global_step_20 global_step_20
 
 # Download checkpoint
 mkdir -p /workspace/simpleRL-reason/checkpoints/3_Qwen_Qwen2.5-Math-7B_batch1024_rollout8_klcoef0.0001_entcoef0.001_simplelr_math_35
-huggingface-cli download aidando73/simplerl-v4-checkpoints global_step_15 path latest_checkpointed_iteration.txt
+huggingface-cli download aidando73/simplerl-v5-checkpoints global_step_15 path latest_checkpointed_iteration.txt
 # huggingface-cli upload-large-folder --repo-type=model --num-workers=16 aidando73/simplerl-v4-checkpoints .
 
 # If dashboard is down
