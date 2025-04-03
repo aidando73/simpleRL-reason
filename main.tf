@@ -12,11 +12,6 @@ terraform {
 locals {
     iam_role_arn = "arn:aws:iam::838892012396:role/TrainingGPUEFA"
 
-    # Create key pair
-    key_name = "aws-us-east-2"
-    # Copy AMI from us-east-1
-    ami = "ami-0fc78879ffe7bb9c9"
-
     # Buy a capacity block
     capacity_block = {
         num_instances = 2
@@ -32,6 +27,12 @@ provider "aws" {
 # Use the default VPC
 data "aws_vpc" "default" {
   default = true
+}
+
+# Generate a new key pair
+resource "aws_key_pair" "key_pair" {
+  key_name   = "aws"
+  public_key = file("~/.ssh/aws.pub")
 }
 
 # Security group for an EFA cluster
