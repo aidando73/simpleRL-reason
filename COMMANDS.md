@@ -83,6 +83,8 @@ realpath . > path.txt && huggingface-cli upload aidando73/simplerl-v5-checkpoint
 huggingface-cli upload aidando73/simplerl-v5-checkpoints latest_checkpointed_iteration.txt
 huggingface-cli upload aidando73/simplerl-v5-checkpoints global_step_20 global_step_20
 
+cd logs && huggingface-cli upload aidando73/simplerl-v5-checkpoints .
+
 # Download checkpoint
 mkdir -p /workspace/simpleRL-reason/checkpoints/3_Qwen_Qwen2.5-Math-7B_batch1024_rollout8_klcoef0.0001_entcoef0.001_simplelr_math_35
 huggingface-cli download aidando73/simplerl-v5-checkpoints global_step_15 path latest_checkpointed_iteration.txt
