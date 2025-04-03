@@ -32,7 +32,7 @@ data "aws_vpc" "default" {
 # Generate a new key pair
 resource "aws_key_pair" "key_pair" {
   key_name   = "aws"
-  public_key = file("~/.ssh/aws.pub")
+  public_key = file("~/.ssh/personal_id_ed25519.pub")
 }
 
 # Security group for an EFA cluster
