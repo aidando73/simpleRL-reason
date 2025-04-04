@@ -84,6 +84,11 @@ resource "aws_instance" "gpu_instance_master" {
 
   iam_instance_profile = local.iam_role_name
 
+  root_block_device {
+    volume_size = 100
+    volume_type = "gp3"
+  }
+
   tags = {
     Name = "TrainingGPUMaster"
   }
@@ -99,6 +104,11 @@ resource "aws_instance" "gpu_instance_worker" {
   vpc_security_group_ids = [aws_security_group.efa_cluster_sg.id]
 
   iam_instance_profile = local.iam_role_name
+
+  root_block_device {
+    volume_size = 100
+    volume_type = "gp3"
+  }
 
   tags = {
     Name = "TrainingGPUWorker"
