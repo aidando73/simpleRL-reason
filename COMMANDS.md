@@ -160,9 +160,4 @@ brew install hashicorp/tap/terraform
 terraform init
 terraform plan
 terraform apply
-
-cd ami/
-terraform init
-terraform plan
-terraform apply
 ```
