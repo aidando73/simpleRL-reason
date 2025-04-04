@@ -9,24 +9,24 @@ terraform {
   required_version = ">= 1.2.0"
 }
 
-variable "capacity_block_id" {
-    type = string
-    description = "The ID of the capacity block to use"
-}
+# variable "capacity_block_id" {
+#     type = string
+#     description = "The ID of the capacity block to use"
+# }
 
 locals {
-    iam_role_arn = "arn:aws:iam::838892012396:role/TrainingGPUEFA"
+  # iam_role_arn = "arn:aws:iam::838892012396:role/TrainingGPUEFA"
+  iam_role_name = "TrainingGPUEFA"
 }
 
-data "aws_ami" "gpu_ami" {
-    most_recent = true
-    owners = ["self"]
-    name_regex = "Custom Deep Learning OSS Nvidia Driver AMI GPU PyTorch 2.4.1 (Ubuntu 22.04) 20250401"
+variable "ami_id" {
+  type = string
+  description = "The ID of the AMI to use"
 }
 
-data "aws_ec2_capacity_reservation" "capacity_block" {
-    id = var.capacity_block_id
-}
+# data "aws_ec2_capacity_reservation" "capacity_block" {
+#     id = var.capacity_block_id
+# }
 
 # Use the default VPC
 data "aws_vpc" "default" {
@@ -74,11 +74,33 @@ resource "aws_security_group" "efa_cluster_sg" {
   }
 }
 
-# resource "aws_instance" "app_server" {
-#   ami           = "ami-830c94e3"
-#   instance_type = "t2.micro"
+resource "aws_instance" "gpu_instance_master" {
+  ami           = var.ami_id
+  instance_type = "t2.micro"
 
-#   tags = {
-#     Name = "ExampleAppServerInstance"
-#   }
-# }
+  key_name = aws_key_pair.key_pair.key_name
+
+  vpc_security_group_ids = [aws_security_group.efa_cluster_sg.id]
+
+  iam_instance_profile = local.iam_role_name
+
+  tags = {
+    Name = "TrainingGPUMaster"
+  }
+}
+
+
+resource "aws_instance" "gpu_instance_worker" {
+  ami           = var.ami_id
+  instance_type = "t2.micro"
+
+  key_name = aws_key_pair.key_pair.key_name
+
+  vpc_security_group_ids = [aws_security_group.efa_cluster_sg.id]
+
+  iam_instance_profile = local.iam_role_name
+
+  tags = {
+    Name = "TrainingGPUWorker"
+  }
+}

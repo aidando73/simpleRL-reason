@@ -20,6 +20,7 @@ module "cluster_west_2" {
   providers = {
     aws = aws.west2
   }
+  ami_id = module.ami_west_2.ami_id
   depends_on = [module.ami_west_2]  # Make sure AMI is ready
-  capacity_block_id = ""
+#   capacity_block_id = ""
 }
