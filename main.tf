@@ -33,5 +33,7 @@ module "cluster_west_2" {
   depends_on = [module.ami_west_2]  # Make sure AMI is ready
   master_volume_id = module.ebs_volume_west_2.master_volume_id
   worker_volume_id = module.ebs_volume_west_2.worker_volume_id
+  availability_zone = "us-west-2b"
+  instance_type = "gr6.8xlarge"
 #   capacity_block_id = ""
 }

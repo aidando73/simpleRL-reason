@@ -34,9 +34,15 @@ variable "worker_volume_id" {
   description = "ID of the EBS volume for worker node"
 }
 
-# data "aws_ec2_capacity_reservation" "capacity_block" {
-#     id = var.capacity_block_id
-# }
+variable "availability_zone" {
+  type        = string
+  description = "The AZ where the instances should be created"
+}
+
+variable "instance_type" {
+  type        = string
+  description = "The instance type to use"
+}
 
 # Use the default VPC
 data "aws_vpc" "default" {
@@ -86,11 +92,13 @@ resource "aws_security_group" "efa_cluster_sg" {
 
 resource "aws_instance" "gpu_instance_master" {
   ami           = var.ami_id
-  instance_type = "t2.micro"
+  instance_type = var.instance_type
 
   key_name = aws_key_pair.key_pair.key_name
 
   vpc_security_group_ids = [aws_security_group.efa_cluster_sg.id]
+
+  availability_zone = var.availability_zone
 
   iam_instance_profile = local.iam_role_name
 
@@ -112,6 +120,8 @@ resource "aws_instance" "gpu_instance_worker" {
   key_name = aws_key_pair.key_pair.key_name
 
   vpc_security_group_ids = [aws_security_group.efa_cluster_sg.id]
+
+  availability_zone = var.availability_zone
 
   iam_instance_profile = local.iam_role_name
 

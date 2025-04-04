@@ -130,3 +130,4 @@ cuda-keyring_1.1-1_all.deb
 .terraform
 terraform.tfstate
 terraform.tfstate.backup
+.terraform.tfstate.lock.info
