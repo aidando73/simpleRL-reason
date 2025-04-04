@@ -44,7 +44,7 @@ export FI_EFA_USE_DEVICE_RDMA=1
 -host $MASTER_NODE_IP,$WORKER_NODE_IP \
 /usr/local/cuda-12.4/efa/test-cuda-12.4/all_reduce_perf \
 -b 8 \
--e 256M \
+-e 1M \
 -f 2 \
 -g 8
 
@@ -157,6 +157,6 @@ terraform apply
 ```
 
 EFA tests (GB/s):
-- 1MB:
-- 256MB:
-- 1GB:
+- 1MB: 0.38
+- 256MB: 4.48
+- 1GB: 
