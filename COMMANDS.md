@@ -2,8 +2,9 @@ Assumes Ubuntu 22.04
 
 ```bash
 token=$(curl --silent -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
-region=$(curl -H "X-aws-ec2-metadata-token: $token" -s http://169.254.169.254/latest/meta-data/placement/region)
-aws configure set default.region $region
+REGION=$(curl -H "X-aws-ec2-metadata-token: $token" -s http://169.254.169.254/latest/meta-data/placement/region)
+echo "export REGION=$REGION" >> .envrc
+aws configure set default.region $REGION
 
 ./attach-device.bash
 # Or
@@ -44,14 +45,13 @@ export FI_EFA_USE_DEVICE_RDMA=1
 -host $MASTER_NODE_IP,$WORKER_NODE_IP \
 /usr/local/cuda-12.4/efa/test-cuda-12.4/all_reduce_perf \
 -b 8 \
--e 256M \
+-e 1M \
 -f 2 \
 -g 8
 
 
 # Run on master
-: > .envrc
-echo "export WANDB_API_KEY=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:838892012396:secret:wandb_api_key-rg9keb --query SecretString --output text | jq -r '.WANDB_API_KEY')" >> .envrc
+echo "export WANDB_API_KEY=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:$region:838892012396:secret:wandb_api_key-rg9keb --query SecretString --output text | jq -r '.WANDB_API_KEY')" >> .envrc
 
 echo "export MASTER_NODE_IP=$(./fetch-ip.bash)" >> .envrc
 
@@ -112,6 +112,24 @@ python3 -c "import torch; print(f'NCCL Version: {torch.cuda.nccl.version()}')"
 # To view ray logs
 tail -f /tmp/ray/session_*/logs/*
 
+# Ngrok proxy
+curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
+	| sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null \
+	&& echo "deb https://ngrok-agent.s3.amazonaws.com buster main" \
+	| sudo tee /etc/apt/sources.list.d/ngrok.list \
+	&& sudo apt update \
+	&& sudo apt install ngrok
+
+# Set credentials
+ngrok config add-authtoken $(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:$REGION:838892012396:secret:ngrok_token-U41uKf --query SecretString --output text | jq -r '.NGROK_TOKEN')
+echo "export NGROK_USERNAME=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:$REGION:838892012396:secret:ngrok_token-U41uKf --query SecretString --output text | jq -r '.NGROK_USERNAME')" >> .envrc
+echo "export NGROK_PASSWORD=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:$REGION:838892012396:secret:ngrok_token-U41uKf --query SecretString --output text | jq -r '.NGROK_PASSWORD')" >> .envrc
+
+direnv allow
+
+tmux
+ngrok http 8265 --url=lasting-swan-large.ngrok-free.app --basic-auth "$NGROK_USERNAME:$NGROK_PASSWORD"
+
 conda activate pytorch
 # sudo apt install -y python3-pip && pip install -U "huggingface_hub[cli]" && export PATH="/home/ubuntu/.local/bin:$PATH"
 huggingface-cli login --token $(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:838892012396:secret:hf_token-zZPDUq --query SecretString --output text | jq -r '.HF_TOKEN')
@@ -157,6 +175,6 @@ terraform apply
 ```
 
 EFA tests (GB/s):
-- 1MB:
-- 256MB:
-- 1GB:
+- 1MB: 0.38
+- 256MB: 4.48
+- 1GB: 5.6
