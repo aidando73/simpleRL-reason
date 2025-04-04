@@ -24,6 +24,16 @@ variable "ami_id" {
   description = "The ID of the AMI to use"
 }
 
+variable "master_volume_id" {
+  type        = string
+  description = "ID of the EBS volume for master node"
+}
+
+variable "worker_volume_id" {
+  type        = string
+  description = "ID of the EBS volume for worker node"
+}
+
 # data "aws_ec2_capacity_reservation" "capacity_block" {
 #     id = var.capacity_block_id
 # }
@@ -113,4 +123,21 @@ resource "aws_instance" "gpu_instance_worker" {
   tags = {
     Name = "TrainingGPUWorker"
   }
+}
+
+resource "aws_volume_attachment" "master_volume_attachment" {
+  device_name = "/dev/sdf"
+  volume_id   = var.master_volume_id
+  instance_id = aws_instance.gpu_instance_master.id
+}
+
+resource "aws_volume_attachment" "worker_volume_attachment" {
+  device_name = "/dev/sdf"
+  volume_id   = var.worker_volume_id
+  instance_id = aws_instance.gpu_instance_worker.id
+}
+
+# Output the AZ for the volumes module to use
+output "availability_zone" {
+  value = aws_instance.gpu_instance_master.availability_zone
 }
