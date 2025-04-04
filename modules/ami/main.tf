@@ -7,10 +7,6 @@ terraform {
   }
 }
 
-provider "aws" {
-  region = "us-east-2"
-}
-
 # Copy AMI from us-east-1 to us-east-2
 resource "aws_ami_copy" "gpu_ami" {
   name                = "Custom Deep Learning OSS Nvidia Driver AMI GPU PyTorch 2.4.1 (Ubuntu 22.04) 20250401"

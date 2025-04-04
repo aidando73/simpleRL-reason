@@ -1,86 +1,29 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.16"
-    }
-  }
-
-  required_version = ">= 1.2.0"
-}
-
-locals {
-    iam_role_arn = "arn:aws:iam::838892012396:role/TrainingGPUEFA"
-
-    # Buy a capacity block
-    capacity_block = {
-        num_instances = 2
-        instance_type = "p4d.24xlarge"
-        availability_zone = "us-east-2a"
-    }
+provider "aws" {
+  alias  = "east2"
+  region = "us-east-2"
 }
 
 provider "aws" {
-  region  = "us-east-2"
+  alias  = "west2"
+  region = "us-west-2"
 }
 
-data "aws_ami" "gpu_ami" {
-    most_recent = true
-    owners = ["self"]
-    name_regex = "Custom Deep Learning OSS Nvidia Driver AMI GPU PyTorch 2.4.1 (Ubuntu 22.04) 20250401"
-}
-
-# Use the default VPC
-data "aws_vpc" "default" {
-  default = true
-}
-
-# Generate a new key pair
-resource "aws_key_pair" "key_pair" {
-  key_name   = "aws"
-  public_key = file("~/.ssh/personal_id_ed25519.pub")
-}
-
-# Security group for an EFA cluster
-resource "aws_security_group" "efa_cluster_sg" {
-  name = "efa-cluster-sg"
-  description = "Security group for an EFA cluster"
-  vpc_id = data.aws_vpc.default.id
-
-  ingress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    self = true
-  }
-
-  # ssh
-  ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # efa
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-    self = true
-  }
-
-  tags = {
-    Name = "efa-cluster-sg"
+module "ami_west_2" {
+  source = "./modules/ami"
+  providers = {
+    aws = aws.west2
   }
 }
 
-# resource "aws_instance" "app_server" {
-#   ami           = "ami-830c94e3"
-#   instance_type = "t2.micro"
-
-#   tags = {
-#     Name = "ExampleAppServerInstance"
-#   }
-# }
+module "cluster_west_2" {
+  source = "./modules/cluster"
+  providers = {
+    aws = aws.west2
+  }
+  depends_on = [module.ami_west_2]  # Make sure AMI is ready
+  capacity_block = {
+    num_instances = 2
+    instance_type = "p4d.24xlarge"
+    availability_zone = "us-west-2a"
+  }
+}
