@@ -44,6 +44,11 @@ variable "instance_type" {
   description = "The instance type to use"
 }
 
+variable "capacity_block_id" {
+  type        = string
+  description = "The ID of the capacity block to use"
+}
+
 # Use the default VPC
 data "aws_vpc" "default" {
   default = true
@@ -61,6 +66,12 @@ resource "aws_instance" "gpu_instance_master" {
   availability_zone      = var.availability_zone
   iam_instance_profile   = local.iam_role_name
   placement_group        = aws_placement_group.cluster.id
+
+  capacity_reservation_specification {
+    capacity_reservation_target {
+      capacity_reservation_id = var.capacity_block_id
+    }
+  }
 
   network_interface {
     network_interface_id = aws_network_interface.master_efa.id
@@ -85,6 +96,12 @@ resource "aws_instance" "gpu_instance_worker" {
   availability_zone      = var.availability_zone
   iam_instance_profile   = local.iam_role_name
   placement_group        = aws_placement_group.cluster.id
+
+  capacity_reservation_specification {
+    capacity_reservation_target {
+      capacity_reservation_id = var.capacity_block_id
+    }
+  }
 
   network_interface {
     network_interface_id = aws_network_interface.worker_efa.id
