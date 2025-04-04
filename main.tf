@@ -41,8 +41,8 @@ provider "aws" {
 # Define a data source to fetch the existing capacity block by ID
 locals {
   # Capacity block information
-  capacity_block_id = "cb-0123456789abcdef0"
-  availability_zone = "us-east-2b"
+  capacity_block_id = "cr-07c818ea789cc9905"
+  availability_zone = "us-east-2a"
   instance_type = "p4d.24xlarge"
 }
 
