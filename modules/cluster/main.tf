@@ -9,12 +9,9 @@ terraform {
   required_version = ">= 1.2.0"
 }
 
-variable "capacity_block" {
-    type = object({
-        num_instances = number
-        instance_type = string
-        availability_zone = string
-    })
+variable "capacity_block_id" {
+    type = string
+    description = "The ID of the capacity block to use"
 }
 
 locals {
@@ -25,6 +22,10 @@ data "aws_ami" "gpu_ami" {
     most_recent = true
     owners = ["self"]
     name_regex = "Custom Deep Learning OSS Nvidia Driver AMI GPU PyTorch 2.4.1 (Ubuntu 22.04) 20250401"
+}
+
+data "aws_ec2_capacity_reservation" "capacity_block" {
+    id = var.capacity_block_id
 }
 
 # Use the default VPC
