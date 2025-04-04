@@ -42,8 +42,8 @@ class Tracking(object):
                 project=project_name,
                 name=experiment_name,
                 config=config,
-                id="4l2mwcsr",
-                resume="must",
+                # id="4l2mwcsr",
+                # resume="must",
                 settings=wandb.Settings(
                     x_stats_disk_paths=("/", "/workspace"),
                 )
