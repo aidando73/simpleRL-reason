@@ -120,7 +120,12 @@ curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
 	&& sudo apt update \
 	&& sudo apt install ngrok
 
+# Set credentials
 ngrok config add-authtoken $(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:$REGION:838892012396:secret:ngrok_token-U41uKf --query SecretString --output text | jq -r '.NGROK_TOKEN')
+echo "export NGROK_USERNAME=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:$REGION:838892012396:secret:ngrok_token-U41uKf --query SecretString --output text | jq -r '.NGROK_USERNAME')" >> .envrc
+echo "export NGROK_PASSWORD=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:$REGION:838892012396:secret:ngrok_token-U41uKf --query SecretString --output text | jq -r '.NGROK_PASSWORD')" >> .envrc
+
+direnv allow
 
 tmux
 ngrok http 8265 --url=lasting-swan-large.ngrok-free.app --basic-auth "$NGROK_USERNAME:$NGROK_PASSWORD"
