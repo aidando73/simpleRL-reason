@@ -2,8 +2,9 @@ Assumes Ubuntu 22.04
 
 ```bash
 token=$(curl --silent -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
-region=$(curl -H "X-aws-ec2-metadata-token: $token" -s http://169.254.169.254/latest/meta-data/placement/region)
-aws configure set default.region $region
+REGION=$(curl -H "X-aws-ec2-metadata-token: $token" -s http://169.254.169.254/latest/meta-data/placement/region)
+echo "export REGION=$REGION" >> .envrc
+aws configure set default.region $REGION
 
 ./attach-device.bash
 # Or
