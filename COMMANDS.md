@@ -153,3 +153,8 @@ terraform init
 terraform plan
 terraform apply
 ```
+
+EFA tests (GB/s):
+- 1MB:
+- 256MB:
+- 1GB:
