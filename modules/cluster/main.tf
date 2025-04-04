@@ -49,6 +49,98 @@ data "aws_vpc" "default" {
   default = true
 }
 
+
+resource "aws_instance" "gpu_instance_master" {
+  ami           = var.ami_id
+  instance_type = var.instance_type
+
+  key_name = aws_key_pair.key_pair.key_name
+
+  vpc_security_group_ids = [aws_security_group.efa_cluster_sg.id]
+
+  availability_zone = var.availability_zone
+
+  iam_instance_profile = local.iam_role_name
+
+  network_interface {
+    network_interface_id = aws_network_interface.master_efa.id
+    device_index         = 0
+  }
+
+  root_block_device {
+    volume_size = 100
+    volume_type = "gp3"
+  }
+
+  tags = {
+    Name = "TrainingGPUMaster"
+  }
+}
+
+
+resource "aws_instance" "gpu_instance_worker" {
+  ami           = var.ami_id
+  instance_type = var.instance_type
+
+  key_name = aws_key_pair.key_pair.key_name
+
+  vpc_security_group_ids = [aws_security_group.efa_cluster_sg.id]
+
+  availability_zone = var.availability_zone
+
+  iam_instance_profile = local.iam_role_name
+
+  network_interface {
+    network_interface_id = aws_network_interface.worker_efa.id
+    device_index         = 0
+  }
+
+  root_block_device {
+    volume_size = 100
+    volume_type = "gp3"
+  }
+
+  tags = {
+    Name = "TrainingGPUWorker"
+  }
+}
+
+resource "aws_volume_attachment" "master_volume_attachment" {
+  device_name = "/dev/sdf"
+  volume_id   = var.master_volume_id
+  instance_id = aws_instance.gpu_instance_master.id
+}
+
+resource "aws_volume_attachment" "worker_volume_attachment" {
+  device_name = "/dev/sdf"
+  volume_id   = var.worker_volume_id
+  instance_id = aws_instance.gpu_instance_worker.id
+}
+
+# Create EFA network interface for master
+resource "aws_network_interface" "master_efa" {
+  subnet_id       = data.aws_vpc.default.id
+  security_groups = [aws_security_group.efa_cluster_sg.id]
+  
+  interface_type = "efa"
+
+  tags = {
+    Name = "TrainingGPUMaster-EFA"
+  }
+}
+
+# Create EFA network interface for worker
+resource "aws_network_interface" "worker_efa" {
+  subnet_id       = data.aws_vpc.default.id
+  security_groups = [aws_security_group.efa_cluster_sg.id]
+  
+  interface_type = "efa"
+
+  tags = {
+    Name = "TrainingGPUWorker-EFA"
+  }
+}
+
 # Generate a new key pair
 resource "aws_key_pair" "key_pair" {
   key_name   = "aws"
@@ -88,63 +180,6 @@ resource "aws_security_group" "efa_cluster_sg" {
   tags = {
     Name = "efa-cluster-sg"
   }
-}
-
-resource "aws_instance" "gpu_instance_master" {
-  ami           = var.ami_id
-  instance_type = var.instance_type
-
-  key_name = aws_key_pair.key_pair.key_name
-
-  vpc_security_group_ids = [aws_security_group.efa_cluster_sg.id]
-
-  availability_zone = var.availability_zone
-
-  iam_instance_profile = local.iam_role_name
-
-  root_block_device {
-    volume_size = 100
-    volume_type = "gp3"
-  }
-
-  tags = {
-    Name = "TrainingGPUMaster"
-  }
-}
-
-
-resource "aws_instance" "gpu_instance_worker" {
-  ami           = var.ami_id
-  instance_type = var.instance_type
-
-  key_name = aws_key_pair.key_pair.key_name
-
-  vpc_security_group_ids = [aws_security_group.efa_cluster_sg.id]
-
-  availability_zone = var.availability_zone
-
-  iam_instance_profile = local.iam_role_name
-
-  root_block_device {
-    volume_size = 100
-    volume_type = "gp3"
-  }
-
-  tags = {
-    Name = "TrainingGPUWorker"
-  }
-}
-
-resource "aws_volume_attachment" "master_volume_attachment" {
-  device_name = "/dev/sdf"
-  volume_id   = var.master_volume_id
-  instance_id = aws_instance.gpu_instance_master.id
-}
-
-resource "aws_volume_attachment" "worker_volume_attachment" {
-  device_name = "/dev/sdf"
-  volume_id   = var.worker_volume_id
-  instance_id = aws_instance.gpu_instance_worker.id
 }
 
 # Output the AZ for the volumes module to use
