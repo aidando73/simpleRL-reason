@@ -53,14 +53,11 @@ data "aws_vpc" "default" {
 resource "aws_instance" "gpu_instance_master" {
   ami           = var.ami_id
   instance_type = var.instance_type
-
   key_name = aws_key_pair.key_pair.key_name
-
   vpc_security_group_ids = [aws_security_group.efa_cluster_sg.id]
-
   availability_zone = var.availability_zone
-
   iam_instance_profile = local.iam_role_name
+  placement_group = aws_placement_group.cluster.id
 
   network_interface {
     network_interface_id = aws_network_interface.master_efa.id
@@ -81,14 +78,11 @@ resource "aws_instance" "gpu_instance_master" {
 resource "aws_instance" "gpu_instance_worker" {
   ami           = var.ami_id
   instance_type = var.instance_type
-
   key_name = aws_key_pair.key_pair.key_name
-
   vpc_security_group_ids = [aws_security_group.efa_cluster_sg.id]
-
   availability_zone = var.availability_zone
-
   iam_instance_profile = local.iam_role_name
+  placement_group = aws_placement_group.cluster.id
 
   network_interface {
     network_interface_id = aws_network_interface.worker_efa.id
@@ -180,6 +174,11 @@ resource "aws_security_group" "efa_cluster_sg" {
   tags = {
     Name = "efa-cluster-sg"
   }
+}
+
+resource "aws_placement_group" "cluster" {
+  name     = "training-gpu-cluster"
+  strategy = "cluster"
 }
 
 # Output the AZ for the volumes module to use
