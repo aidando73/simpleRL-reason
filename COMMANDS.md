@@ -128,8 +128,7 @@ ray job status 03000000
 ray job logs 03000000
 
 # New EBS volume
-lsblk
-
+./setup-ebs.bash
 
 
 # Testing bandwidth
