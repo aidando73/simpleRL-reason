@@ -1,8 +1,8 @@
 Assumes Ubuntu 22.04
 
 ```bash
-aws configure set default.region us-east-1
-./attach-ebs.bash
+region=$(curl -H "X-aws-ec2-metadata-token: $(./fetch-token.sh)" -s http://169.254.169.254/latest/meta-data/placement/region)
+aws configure set default.region $region
 
 git checkout aidand-v6 && git pull
 
