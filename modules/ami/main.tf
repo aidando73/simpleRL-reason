@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.16"
-    }
-  }
-}
-
 # Copy AMI from us-east-1 to us-east-2
 resource "aws_ami_copy" "gpu_ami" {
   name                = "Custom Deep Learning OSS Nvidia Driver AMI GPU PyTorch 2.4.1 (Ubuntu 22.04) 20250401"

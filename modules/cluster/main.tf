@@ -1,13 +1,3 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.16"
-    }
-  }
-
-  required_version = ">= 1.2.0"
-}
 
 # variable "capacity_block_id" {
 #     type = string
@@ -67,6 +57,10 @@ resource "aws_instance" "gpu_instance_master" {
   iam_instance_profile   = local.iam_role_name
   placement_group        = aws_placement_group.cluster.id
 
+  instance_market_options {
+    market_type = "capacity-block"
+  }
+
   capacity_reservation_specification {
     capacity_reservation_target {
       capacity_reservation_id = var.capacity_block_id
@@ -97,8 +91,13 @@ resource "aws_instance" "gpu_instance_worker" {
   iam_instance_profile   = local.iam_role_name
   placement_group        = aws_placement_group.cluster.id
 
+  instance_market_options {
+    market_type = "capacity-block"
+  }
+
   capacity_reservation_specification {
     capacity_reservation_target {
+      
       capacity_reservation_id = var.capacity_block_id
     }
   }
