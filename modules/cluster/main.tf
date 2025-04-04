@@ -115,7 +115,7 @@ resource "aws_instance" "gpu_instance_master" {
 
 resource "aws_instance" "gpu_instance_worker" {
   ami           = var.ami_id
-  instance_type = "t2.micro"
+  instance_type = var.instance_type
 
   key_name = aws_key_pair.key_pair.key_name
 
