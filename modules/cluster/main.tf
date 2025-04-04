@@ -20,7 +20,7 @@ locals {
 }
 
 variable "ami_id" {
-  type = string
+  type        = string
   description = "The ID of the AMI to use"
 }
 
@@ -49,15 +49,18 @@ data "aws_vpc" "default" {
   default = true
 }
 
+data "aws_subnet" "subnet" {
+  availability_zone = var.availability_zone
+  vpc_id            = data.aws_vpc.default.id
+}
 
 resource "aws_instance" "gpu_instance_master" {
-  ami           = var.ami_id
-  instance_type = var.instance_type
-  key_name = aws_key_pair.key_pair.key_name
-  vpc_security_group_ids = [aws_security_group.efa_cluster_sg.id]
-  availability_zone = var.availability_zone
-  iam_instance_profile = local.iam_role_name
-  placement_group = aws_placement_group.cluster.id
+  ami                    = var.ami_id
+  instance_type          = var.instance_type
+  key_name               = aws_key_pair.key_pair.key_name
+  availability_zone      = var.availability_zone
+  iam_instance_profile   = local.iam_role_name
+  placement_group        = aws_placement_group.cluster.id
 
   network_interface {
     network_interface_id = aws_network_interface.master_efa.id
@@ -76,13 +79,12 @@ resource "aws_instance" "gpu_instance_master" {
 
 
 resource "aws_instance" "gpu_instance_worker" {
-  ami           = var.ami_id
-  instance_type = var.instance_type
-  key_name = aws_key_pair.key_pair.key_name
-  vpc_security_group_ids = [aws_security_group.efa_cluster_sg.id]
-  availability_zone = var.availability_zone
-  iam_instance_profile = local.iam_role_name
-  placement_group = aws_placement_group.cluster.id
+  ami                    = var.ami_id
+  instance_type          = var.instance_type
+  key_name               = aws_key_pair.key_pair.key_name
+  availability_zone      = var.availability_zone
+  iam_instance_profile   = local.iam_role_name
+  placement_group        = aws_placement_group.cluster.id
 
   network_interface {
     network_interface_id = aws_network_interface.worker_efa.id
@@ -113,9 +115,9 @@ resource "aws_volume_attachment" "worker_volume_attachment" {
 
 # Create EFA network interface for master
 resource "aws_network_interface" "master_efa" {
-  subnet_id       = data.aws_vpc.default.id
+  subnet_id       = data.aws_subnet.subnet.id
   security_groups = [aws_security_group.efa_cluster_sg.id]
-  
+
   interface_type = "efa"
 
   tags = {
@@ -125,9 +127,9 @@ resource "aws_network_interface" "master_efa" {
 
 # Create EFA network interface for worker
 resource "aws_network_interface" "worker_efa" {
-  subnet_id       = data.aws_vpc.default.id
+  subnet_id       = data.aws_subnet.subnet.id
   security_groups = [aws_security_group.efa_cluster_sg.id]
-  
+
   interface_type = "efa"
 
   tags = {
@@ -143,32 +145,32 @@ resource "aws_key_pair" "key_pair" {
 
 # Security group for an EFA cluster
 resource "aws_security_group" "efa_cluster_sg" {
-  name = "efa-cluster-sg"
+  name        = "efa-cluster-sg"
   description = "Security group for an EFA cluster"
-  vpc_id = data.aws_vpc.default.id
+  vpc_id      = data.aws_vpc.default.id
 
   ingress {
     from_port = 0
-    to_port = 0
-    protocol = "-1"
-    self = true
+    to_port   = 0
+    protocol  = "-1"
+    self      = true
   }
 
   # ssh
   ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   # efa
   egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
-    self = true
+    self        = true
   }
 
   tags = {
