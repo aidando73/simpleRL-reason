@@ -50,7 +50,6 @@ export FI_EFA_USE_DEVICE_RDMA=1
 
 
 # Run on master
-: > .envrc
 echo "export WANDB_API_KEY=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:838892012396:secret:wandb_api_key-rg9keb --query SecretString --output text | jq -r '.WANDB_API_KEY')" >> .envrc
 
 echo "export MASTER_NODE_IP=$(./fetch-ip.bash)" >> .envrc
@@ -159,4 +158,4 @@ terraform apply
 EFA tests (GB/s):
 - 1MB: 0.38
 - 256MB: 4.48
-- 1GB: 
+- 1GB: 5.6
