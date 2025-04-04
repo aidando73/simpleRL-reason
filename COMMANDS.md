@@ -4,6 +4,8 @@ Assumes Ubuntu 22.04
 region=$(curl -H "X-aws-ec2-metadata-token: $(./fetch-token.sh)" -s http://169.254.169.254/latest/meta-data/placement/region)
 aws configure set default.region $region
 
+./attach-device.bash
+
 git checkout aidand-v6 && git pull
 
 # Verify CUDA installation
@@ -127,17 +129,8 @@ ray job logs 03000000
 
 # New EBS volume
 lsblk
-DEVICE_ID=nvme9n1
-sudo mkdir -p /workspace
-sudo mkfs -t xfs /dev/$DEVICE_ID #!!! Will destroy existing data on volume
-sudo mount /dev/$DEVICE_ID /workspace
-echo "/dev/$DEVICE_ID  /workspace  xfs  defaults,nofail  0  2" | sudo tee -a /etc/fstab
-sudo chown ubuntu:ubuntu /workspace
-cd /workspace \
-&& git clone https://github.com/aidando73/simpleRL-reason \
-&& cd simpleRL-reason \
-&& git checkout aidand-v2 \
-&& echo "👉 $(realpath .)"
+
+
 
 # Testing bandwidth
 sudo apt-get install -y iperf3
