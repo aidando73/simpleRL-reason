@@ -6,6 +6,8 @@ region=$(curl -H "X-aws-ec2-metadata-token: $token" -s http://169.254.169.254/la
 aws configure set default.region $region
 
 ./attach-device.bash
+# Or
+./setup-ebs.bash
 
 git checkout aidand-v6 && git pull
 
