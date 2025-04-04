@@ -42,7 +42,7 @@ export FI_EFA_USE_DEVICE_RDMA=1
 -host $MASTER_NODE_IP,$WORKER_NODE_IP \
 /usr/local/cuda-12.4/efa/test-cuda-12.4/all_reduce_perf \
 -b 8 \
--e 16G \
+-e 256M \
 -f 2 \
 -g 8
 
