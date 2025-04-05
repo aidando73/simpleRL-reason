@@ -72,14 +72,15 @@ tail -f /tmp/ray/session_*/logs/*
 
 # Ngrok proxy
 curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
-	| sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null \
+	| tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null \
 	&& echo "deb https://ngrok-agent.s3.amazonaws.com buster main" \
-	| sudo tee /etc/apt/sources.list.d/ngrok.list \
-	&& sudo apt update \
-	&& sudo apt install ngrok
+	| tee /etc/apt/sources.list.d/ngrok.list \
+	&& apt update \
+	&& apt install ngrok
 
 # Set credentials
 tmux
+ngrok config add-authtoken $NGROK_TOKEN
 ngrok http 8265 --url=lasting-swan-large.ngrok-free.app --basic-auth "$NGROK_USERNAME:$NGROK_PASSWORD"
 
 pip install huggingface_hub[cli] -U
