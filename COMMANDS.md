@@ -26,7 +26,7 @@ uv pip install -e .
 
 # launch the master node of ray
 tmux
-conda activate pytorch
+source ~/miniconda3/bin/activate ./env
 ray start --head \
 --node-ip-address 0.0.0.0 \
 --num-gpus 8 \
