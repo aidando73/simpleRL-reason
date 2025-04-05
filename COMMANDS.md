@@ -2,12 +2,13 @@ Assumes Ubuntu 22.04
 
 ```bash
 ./setup-runpod.bash
+
 cd /workspace \
 && git clone https://github.com/aidando73/simpleRL-reason \
 && cd simpleRL-reason \
 && git checkout aidand-v8 \
 && git pull \
-&& echo "👉 $(realpath .)"
+&& echo "$(realpath .)"
 
 # Verify CUDA installation
 nvidia-smi
@@ -97,3 +98,16 @@ ray job list
 ray job status 03000000
 ray job logs 03000000
 ```
+
+CUDA 12.4
+ID: uaozuthocsy1gj
+8 x H200 SXM
+160 vCPU 2014 GB RAM
+runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04
+200 GB Disk
+5000 GB Pod Volume
+AP-JP-1
+11505 Mbps
+9595 Mbps
+14101 MBps
+$31.92/hr
