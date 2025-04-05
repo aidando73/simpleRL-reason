@@ -30,8 +30,6 @@ authors = [
 
 # Dependencies corresponding to install_requires in setup.py
 dependencies = [
-    "torch==2.4.1",
-    "torchvision==0.19.1",
     "accelerate",
     "codetiming",
     "datasets",
