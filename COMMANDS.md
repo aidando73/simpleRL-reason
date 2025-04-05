@@ -99,17 +99,8 @@ ray list
 ray job list
 ray job status 03000000
 ray job logs 03000000
+
+# Get pod start-time
+TZ=Australia/Sydney ls -alh ~
 ```
 
-CUDA 12.4
-ID: uaozuthocsy1gj
-8 x H200 SXM
-160 vCPU 2014 GB RAM
-runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04
-200 GB Disk
-5000 GB Pod Volume
-AP-JP-1
-11505 Mbps
-9595 Mbps
-14101 MBps
-$31.92/hr
