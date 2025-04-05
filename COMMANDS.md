@@ -3,8 +3,8 @@ Assumes Ubuntu 22.04
 ```bash
 token=$(curl --silent -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
 REGION=$(curl -H "X-aws-ec2-metadata-token: $token" -s http://169.254.169.254/latest/meta-data/placement/region)
-echo "export REGION=$REGION" >> .envrc
 aws configure set default.region $REGION
+echo "export REGION=$REGION" >> .envrc
 
 ./attach-device.bash
 # Or
@@ -131,9 +131,12 @@ tmux
 ngrok http 8265 --url=lasting-swan-large.ngrok-free.app --basic-auth "$NGROK_USERNAME:$NGROK_PASSWORD"
 
 conda activate pytorch
+pip install huggingface_hub[cli]
 # sudo apt install -y python3-pip && pip install -U "huggingface_hub[cli]" && export PATH="/home/ubuntu/.local/bin:$PATH"
-huggingface-cli login --token $(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:838892012396:secret:hf_token-zZPDUq --query SecretString --output text | jq -r '.HF_TOKEN')
+huggingface-cli login --token $(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:$REGION:838892012396:secret:hf_token-zZPDUq --query SecretString --output text | jq -r '.HF_TOKEN')
 huggingface-cli upload aidando73/simplerl-v4-checkpoints global_step_15 global_step_15
+
+huggingface-cli upload aidando73/simplerl-v6-checkpoints .
 
 # Download checkpoint
 mkdir -p /workspace/simpleRL-reason/checkpoints/3_Qwen_Qwen2.5-Math-7B_batch1024_rollout8_klcoef0.0001_entcoef0.001_simplelr_math_35

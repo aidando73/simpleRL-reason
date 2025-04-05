@@ -57,15 +57,15 @@ resource "aws_instance" "gpu_instance_master" {
   iam_instance_profile   = local.iam_role_name
   placement_group        = aws_placement_group.cluster.id
 
-  instance_market_options {
-    market_type = "capacity-block"
-  }
+  # instance_market_options {
+  #   market_type = "capacity-block"
+  # }
 
-  capacity_reservation_specification {
-    capacity_reservation_target {
-      capacity_reservation_id = var.capacity_block_id
-    }
-  }
+  # capacity_reservation_specification {
+  #   capacity_reservation_target {
+  #     capacity_reservation_id = var.capacity_block_id
+  #   }
+  # }
 
   network_interface {
     network_interface_id = aws_network_interface.master_efa.id
@@ -91,16 +91,16 @@ resource "aws_instance" "gpu_instance_worker" {
   iam_instance_profile   = local.iam_role_name
   placement_group        = aws_placement_group.cluster.id
 
-  instance_market_options {
-    market_type = "capacity-block"
-  }
+  # instance_market_options {
+  #   market_type = "capacity-block"
+  # }
 
-  capacity_reservation_specification {
-    capacity_reservation_target {
+  # capacity_reservation_specification {
+  #   capacity_reservation_target {
       
-      capacity_reservation_id = var.capacity_block_id
-    }
-  }
+  #     capacity_reservation_id = var.capacity_block_id
+  #   }
+  # }
 
   network_interface {
     network_interface_id = aws_network_interface.worker_efa.id
