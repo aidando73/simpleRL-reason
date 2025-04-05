@@ -1,11 +1,7 @@
 Assumes Ubuntu 22.04
 
 ```bash
-git checkout aidand-v8 && git pull
-
-# Verify CUDA installation
-nvidia-smi
-
+./setup-runpod.bash
 cd /workspace \
 && git clone https://github.com/aidando73/simpleRL-reason \
 && cd simpleRL-reason \
@@ -13,6 +9,8 @@ cd /workspace \
 && git pull \
 && echo "👉 $(realpath .)"
 
+# Verify CUDA installation
+nvidia-smi
 
 # TODO
 direnv allow
@@ -98,5 +96,4 @@ ray list
 ray job list
 ray job status 03000000
 ray job logs 03000000
-
 ```
