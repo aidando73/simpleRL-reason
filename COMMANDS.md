@@ -17,9 +17,11 @@ cp ~/.runpod_credentials .envrc
 direnv allow
 # Copy .envrc to worker node
 
-source ~/miniconda3/bin/activate && conda create --prefix ./env python=3.10
+source ~/miniconda3/bin/activate && conda create -y --prefix ./env python=3.10
+source ~/miniconda3/bin/activate ./env
 pip install uv
-uv pip install --no-build-isolation
+uv pip install torch==2.4.0 --index-url https://download.pytorch.org/whl/cu124
+uv pip install flash-attn --no-build-isolation
 uv pip install -e .
 
 # launch the master node of ray
