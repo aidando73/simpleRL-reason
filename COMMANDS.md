@@ -13,11 +13,11 @@ cd /workspace \
 # Verify CUDA installation
 nvidia-smi
 
-# TODO
+cp ~/.runpod_credentials .envrc
 direnv allow
 # Copy .envrc to worker node
 
-conda activate pytorch
+source ~/miniconda3/bin/activate && conda create --prefix ./env python=3.10
 pip install uv
 uv pip install --no-build-isolation
 uv pip install -e .
