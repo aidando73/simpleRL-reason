@@ -84,7 +84,11 @@ ngrok config add-authtoken $NGROK_TOKEN
 ngrok http 8265 --url=lasting-swan-large.ngrok-free.app --basic-auth "$NGROK_USERNAME:$NGROK_PASSWORD"
 
 pip install huggingface_hub[cli] -U
-huggingface-cli upload aidando73/simplerl-v8-checkpoints global_step_15 global_step_15
+huggingface-cli upload aidando73/simplerl-v8-checkpoints global_step_5 global_step_5
+
+huggingface-cli upload aidando73/simplerl-v8-checkpoints last_checkpointed_iteration.txt
+realpath . > path.txt
+huggingface-cli upload aidando73/simplerl-v8-checkpoints path.txt
 
 huggingface-cli upload aidando73/simplerl-v8-checkpoints .
 
