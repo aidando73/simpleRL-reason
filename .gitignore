@@ -7,6 +7,7 @@
 **/*.tar.gz
 **/playground
 **/wandb
+logs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -121,3 +122,12 @@ examples/data_preprocess/converted_data
 examples/data_preprocess/data
 
 model_scope_model
+
+.envrc
+
+cuda-keyring_1.1-1_all.deb
+
+.terraform
+terraform.tfstate
+terraform.tfstate.backup
+.terraform.tfstate.lock.info

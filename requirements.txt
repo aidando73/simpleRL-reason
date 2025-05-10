@@ -1,6 +1,6 @@
 accelerate
 codetiming
-datasets
+datasets>=2.16.0
 dill
 hydra-core==1.4.0.dev1
 omegaconf==2.4.0.dev3
@@ -9,7 +9,7 @@ pybind11
 ray[default]==2.10.0
 tensordict
 transformers<4.48
-vllm<=0.6.3
+vllm==0.6.3
 peft
 liger-kernel
 word2number

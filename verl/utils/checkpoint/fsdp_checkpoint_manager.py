@@ -133,6 +133,9 @@ class FSDPCheckpointManager(BaseCheckpointManager):
                 torch.save(model_state_dict, model_path)
                 torch.save(optimizer_state_dict, optim_path)  # TODO: address optimizer is None
                 torch.save(extra_state_dict, extra_path)
+                print(f'[rank-{self.rank}]: Saved model to {os.path.abspath(model_path)}')
+                print(f'[rank-{self.rank}]: Saved checkpoint to {os.path.abspath(model_path)}')
+                print(f'[rank-{self.rank}]: Saved extra_state to {os.path.abspath(extra_path)}')
 
         with FSDP.state_dict_type(self.model, StateDictType.FULL_STATE_DICT, FullStateDictConfig(offload_to_cpu=True, rank0_only=True)):
             full_state_dict = self.model.state_dict()
@@ -144,11 +147,17 @@ class FSDPCheckpointManager(BaseCheckpointManager):
             os.makedirs(hf_local_path, exist_ok=True)
             
             # 先保存配置和tokenizer
+            print(f'[rank-{self.rank}]: Saving config to {os.path.abspath(hf_local_path)}')
             self.model._fsdp_wrapped_module.config.save_pretrained(hf_local_path)
+            print(f'[rank-{self.rank}]: Saved config to {os.path.abspath(hf_local_path)}')
+            print(f'[rank-{self.rank}]: Saving tokenizer to {os.path.abspath(hf_local_path)}')
             self.tokenizer.save_pretrained(hf_local_path)
+            print(f'[rank-{self.rank}]: Saved tokenizer to {os.path.abspath(hf_local_path)}')
             
             # 获取完整的模型状态字典并保存
+            print(f'[rank-{self.rank}]: Saving full model to {os.path.abspath(hf_local_path)}')
             self.model.save_pretrained(hf_local_path, state_dict=full_state_dict)
+            print(f'[rank-{self.rank}]: Saved full model to {os.path.abspath(hf_local_path)}')
 
         torch.distributed.barrier()
         
